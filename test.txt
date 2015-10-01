@@ -1,2 +1,0 @@
-initial content of test.txt
-new line
