@@ -1,17 +1,23 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>jQuery UI Accordion - Default functionality</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="/resources/default.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="jquery.validate.js"></script>
+
+<jsp:include page="header.jsp"></jsp:include>
+
 <script>
 	$(function() {
 		$("#accordion").accordion();
+		$("#datepicker" ).datepicker({
+		      changeMonth: true,
+		      changeYear: true,
+		       minDate: "-120y", 
+		       maxDate: -1 
+		    });
+		$( "input[type=submit], a, button" )
+	      .button();
+	      
 	});
-	$("form").validate();
+	
 </script>
 </head>
 <body>
@@ -22,33 +28,54 @@
 		<h2>Registration</h2>
 		<div>
 			<form action="RegistrationServlet" method="post" class="cmxform">
-				<fieldset>
-					<p><label for="username"> User name: <span>Required minimum 4 characters</span> </label>
+					<p><label for="username"> User name:<span>*</span> </label>
 					<input type="text" name="username" minlength="4" required></p> 
 					<p><label for="firstname">First name:</label> <input type="text" name="firstname"> </p>
 					<p><label for="latsname">Last name:</label> <input type="text" name="lastname"></p>
-					<p> <label for="pass">Password:<span>Required minimum 4 characters</span></label><input type="password" name="pass" required minlength="4"></p>
-					<p> <label for="motto">Motto:</label><input type="text" name="motto" value="Insert awesome quote here..."></p>
+					<p><label for="email">E-mail:</label><input type="email" name="email"></p>
+					<p> <label for="pass">Password:<span>**</span></label><input type="password" name="pass" required minlength="6"></p>
+					<p><label for="birth">Birth date:</label><input type="text" name="birth" id="datepicker"></p>
 					<p> <input type="submit" value="Register"></p>
-				</fieldset>
+					<div id="tooltip">
+					<p>* - required, minimum 4 characters long.<p>
+					<p>**- required, minimum 6 characters long.<p>
+					</div>
 			</form>
 		</div>
 
 		<h2>Login</h2>
 		<div>
-
 			<form action="LoginServlet" method="post" class="cmxform">
-				<fieldset>
 					<p><label for="username">User name:</label> <input type="text" name="username" required></p>
 					<p><label for="pass">Password:</label> <input type="password" name="pass" required></p>
 					<p><input type="submit" value="Login"><p>
-				</fieldset>
 			</form>
-
-
-
 		</div>
 	</div>
+	<%
+String state = (String) request.getAttribute("state");
+ if(state !=null && state.equals("SUCCESS")){
+	 request.removeAttribute("state");
+	for (java.util.Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();)
+		       request.removeAttribute(e.nextElement());
+	%>
+	<div class="success">Successful registration! </div>
+	
+	<script>
+		//javascript redirection
+		
+		setTimeout(function(){document.location.href="UserList.jsp"}, 1200);
+</script>
+	<%
+}else if(state!=null && state.equals("FAILURE")){
+	request.removeAttribute("state");
+	for (java.util.Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();)
+	       request.removeAttribute(e.nextElement());
+	%>
+	<div class="failure">Registration failed. </div>
+	<%
+}
+%>
 	</div>
 </body>
 </html>

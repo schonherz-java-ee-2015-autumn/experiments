@@ -1,6 +1,7 @@
 package hu.schonherz.web.reg;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,20 +46,23 @@ public class RegistrationServlet extends HttpServlet {
 		String firstName = request.getParameter("firstname");
 		String lastName = request.getParameter("lastname");
 		String password = request.getParameter("pass");
-		String motto = request.getParameter("motto");
+		String email = request.getParameter("email");
+		Date date = new Date(request.getParameter("birth"));
+		if(userName.isEmpty() || password.isEmpty())
+			response.sendRedirect("index.jsp");
+		
 		if(!users.containsKey(userName)){
 			 synchronized (mutex){
-			users.put(userName, new User(userName, firstName, lastName, password, motto));
+			users.put(userName, new User(userName, firstName, lastName, password, email, date));
+			
 			 }
-			response.sendRedirect("ShowListServlet");
+			 request.setAttribute("state", "SUCCESS");
 		}else{
-			if(users.get(userName).getPass().equals(password)){
-				response.sendRedirect("ShowListServlet");
-			}else{
-				response.getWriter().append("Incorrect username or password.");
-				
-			}
+			
+			request.setAttribute("state", "FAILURE");	
 		}
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+		
 	}
 
 }
