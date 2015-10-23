@@ -37,13 +37,13 @@ public class GetUsers extends HttpServlet {
 			response.getWriter().write("\n");
 		}*/
 		//a requstnek át kell adni hogy milyen néven fogja nekünk továbaddni az objektumunkat :)
-		request.setAttribute("userList",Data.users);
+		request.getSession().setAttribute("userList",Data.users);
 		//következő oldal
-		String nextPage = "/userlist.jsp";
+		String nextPage = "userlist.jsp";
 		//DiszPÉCSER (nem tudom még mikre is jó még :D)
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		//laza forward
-		rd.forward(request, response);
+		response.sendRedirect(nextPage);
 		
 	}
 

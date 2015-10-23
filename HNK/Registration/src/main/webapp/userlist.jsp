@@ -78,8 +78,8 @@ h2 {
 		</thead>
 		<tbody>
 			<%
-				if (request.getAttribute("userList") != null) {
-					ArrayList<hu.register.form.RegisterData> itemsArray = (ArrayList<hu.register.form.RegisterData>) request.getAttribute("userList");
+				if (session.getAttribute("userList") != null) {
+					ArrayList<hu.register.form.RegisterData> itemsArray = (ArrayList<hu.register.form.RegisterData>) session.getAttribute("userList");
 					for (int i=0; i < itemsArray.size(); i++) {
 						%>
 						<tr>
