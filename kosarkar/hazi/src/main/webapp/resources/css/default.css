@@ -1,0 +1,52 @@
+.warning{
+	color:red;
+}
+.success{
+	margin:auto;
+	padding:10px;
+	border:1px;
+	border-radius:20px;
+	color:white;
+	background-color:#27ad42;
+	font-style:bold;
+}
+.failure{
+	margin:auto;
+	padding:10px;
+	border:1px;
+	border-radius:20px;
+	color:black;
+	background-color:#d90000;
+	font-style:bold;
+}
+body{
+	background-color:#333;
+}
+#main{
+    margin: auto;
+    width: 480px;
+    padding: 10px;
+
+}
+
+form{
+	width:400px;
+}
+form input{
+	float:right;
+	font-size:12px;
+}
+form span{
+	font-size:8px;
+	color:red;
+	font-style:italic;
+}
+form label{
+	font-size:14px;
+}
+
+
+#tooltip{
+	font-size:12px;
+	font-style: italic;
+}

@@ -1,0 +1,9 @@
+body{
+	backgroud-color:blue;
+}
+table {
+	border:1px solid black;
+	border-radius: 25px;
+	padding:25px;
+	align:center;
+}
