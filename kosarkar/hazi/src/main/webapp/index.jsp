@@ -64,7 +64,7 @@ String state = (String) request.getAttribute("state");
 	<script>
 		//javascript redirection
 		
-		setTimeout(function(){document.location.href="UserList.jsp"}, 1200);
+		setTimeout(function(){document.location.replace("UserList.jsp")}, 1200);
 </script>
 	<%
 }else if(state!=null && state.equals("FAILURE")){
