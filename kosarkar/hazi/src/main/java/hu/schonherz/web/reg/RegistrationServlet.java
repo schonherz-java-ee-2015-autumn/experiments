@@ -54,13 +54,15 @@ public class RegistrationServlet extends HttpServlet {
 		
 		if(userName==null || userName.isEmpty()){
 			request.setAttribute("state", "FAILURE");
-			response.sendRedirect("index.jsp");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			return;
 		}
 		
 		
 		if(password==null || password.isEmpty()){
 			request.setAttribute("state", "FAILURE");
-			response.sendRedirect("index.jsp");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			return;
 		}
 			
 		if(Validator.isValidDate(request.getParameter("birth"), Validator.DATEFORMAT)){
@@ -69,15 +71,19 @@ public class RegistrationServlet extends HttpServlet {
 			try {
 				date = dateF.parse(request.getParameter("birth"));
 			} catch (ParseException e) {
-			
+				request.setAttribute("state", "FAILURE");
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+				return;
 			}	
 		}else{
 			request.setAttribute("state", "FAILURE");
-			response.sendRedirect("index.jsp");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			return;
 		}
 		if(!Validator.isValidEmailAddress(email)){
 			request.setAttribute("state", "FAILURE");
-			response.sendRedirect("index.jsp");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			return;
 		}
 		
 		

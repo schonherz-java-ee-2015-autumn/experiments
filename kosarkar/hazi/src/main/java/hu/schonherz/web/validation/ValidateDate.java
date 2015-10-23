@@ -1,7 +1,9 @@
-package hu.schonherz.web.reg;
+package hu.schonherz.web.validation;
 
 import java.io.IOException;
-import java.util.Map.Entry;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,19 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hu.schonherz.web.model.User;
-
 /**
- * Servlet implementation class ShowListServlet
+ * Servlet implementation class ValidateDate
  */
-@WebServlet("/ShowListServlet")
-public class ShowListServlet extends HttpServlet {
+@WebServlet("/ValidateDate")
+public class ValidateDate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowListServlet() {
+    public ValidateDate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +31,25 @@ public class ShowListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(RegistrationServlet.users!=null)
-		for(Entry<String, User> u: RegistrationServlet.users.entrySet() ){
-			response.getWriter().append("<div>");
-			response.getWriter().append(u.getValue().toString());
-			response.getWriter().append("<div>");
-			response.getWriter().append("<br>");
-		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
-		if(RegistrationServlet.users!=null)
-		for(Entry<String, User> u: RegistrationServlet.users.entrySet() ){
-			response.getWriter().append("<div>");
-			response.getWriter().append(u.getValue().toString());
-			response.getWriter().append("<div>");
-			response.getWriter().append("<br>");
+		String date = request.getParameter("date");
+		String dateFormat = request.getParameter("dateFormat");
+		SimpleDateFormat dateF = new SimpleDateFormat(dateFormat);
+		dateF.setLenient(false);
+		try {
+			Date d = dateF.parse(date);
+			System.out.println(d);
+			response.getWriter().write("true");
+		} catch (ParseException e) {
+			response.getWriter().write("false");
 		}
+		
 	}
 
 }

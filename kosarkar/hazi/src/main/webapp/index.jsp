@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 
 <jsp:include page="header.jsp"></jsp:include>
-<script src="resources/js/validate.js"></script>
+
 <script>
 	$(function() {
 		$("#accordion").accordion();
@@ -17,6 +17,42 @@
 	      .button();
 	      
 	});
+	
+	  $( "form" ).submit(function( event ) {
+		  
+    	  var d = validateDate($("#dateId").val(),"MM/dd/yyyy");
+    	  
+    	  if(d != "true") {
+   	 		 $('#dateIdL').addClass('warning');   
+   	 		  event.preventDefault();   	 		  
+   	 	  } else {
+   	 		 $('#dateIdL').removeClass('warning');  
+   	 	  }
+    
+    	});
+    
+   
+  function validateDate(inputDate,inputDateFormat) {
+		var reValue = 0;
+		$.ajax({
+			url : 'ValidateDate',
+			method : "POST",
+			data : {
+				date : inputDate,
+				dateFormat : inputDateFormat
+			},
+			success : function(data) {
+				reValue = data;
+			},
+			error : function(data) {
+				reValue = data;
+			},
+			dataType : "html",
+			async:false
+		});
+		return reValue;
+	}
+   
 	
 </script>
 </head>
@@ -32,7 +68,7 @@
 					<input type="text" name="username" minlength="4" required></p> 
 					<p><label for="firstname" id="firstNameLabel">First name:</label> <input type="text" name="firstname"> </p>
 					<p><label for="latsname" id="lastNameLabel">Last name:</label> <input type="text" name="lastname"></p>
-					<p><label for="email" id="emailLabel">E-mail:</label><input type="email" name="email"></p>
+					<p><label for="email" id="emailLabel">E-mail:<span>*</span></label><input type="email" name="email" required></p>
 					<p> <label for="pass" id="passwordLabel">Password:<span>***</span></label><input type="password" name="pass" required minlength="6"></p>
 					<p><label for="birth" id="dateOfBirthLabel">Birth date:<span>*</span></label><input type="text" name="birth" id="datepicker" required></p>
 					<p> <input type="submit" value="Register"></p>

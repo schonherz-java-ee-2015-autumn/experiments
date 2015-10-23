@@ -47,7 +47,8 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		}else{
-			response.sendRedirect("index.jsp");
+			request.setAttribute("state", "LOGIN_FAILURE");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 	}
 
