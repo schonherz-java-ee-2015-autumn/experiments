@@ -1,0 +1,29 @@
+@CHARSET "ISO-8859-1";
+
+.tooltip {
+	margin-left: 10px;
+	border: 2px solid #FFFFFF;
+	color: #FFFFFF;
+	text-align: center;
+	font: bold 14px "Helvetica Neue", Sans-Serif;
+	background-color: #FF0000;
+	position: absolute;
+	z-index: 2;
+	border-radius: 20px;
+	padding: 4px;
+	box-shadow: 0 0 7px black;
+}
+
+#buttonSubmit {
+	margin-left: 10px;
+	border: 2px solid #FFFFFF;
+	color: #FFFFFF;
+	text-align: center;
+	font: bold 14px "Helvetica Neue", Sans-Serif;
+	background-color: #FF0000;
+	position: absolute;
+	z-index: 2;
+	border-radius: 20px;
+	padding: 4px;
+	box-shadow: 0 0 7px black;
+}
