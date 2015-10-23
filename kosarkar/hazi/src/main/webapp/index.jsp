@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 
 <jsp:include page="header.jsp"></jsp:include>
-
+<script src="resources/js/validate.js"></script>
 <script>
 	$(function() {
 		$("#accordion").accordion();
@@ -28,17 +28,19 @@
 		<h2>Registration</h2>
 		<div>
 			<form action="RegistrationServlet" method="post" class="cmxform">
-					<p><label for="username"> User name:<span>*</span> </label>
+					<p><label for="username" id="usernameLabel"> User name:<span>**</span> </label>
 					<input type="text" name="username" minlength="4" required></p> 
-					<p><label for="firstname">First name:</label> <input type="text" name="firstname"> </p>
-					<p><label for="latsname">Last name:</label> <input type="text" name="lastname"></p>
-					<p><label for="email">E-mail:</label><input type="email" name="email"></p>
-					<p> <label for="pass">Password:<span>**</span></label><input type="password" name="pass" required minlength="6"></p>
-					<p><label for="birth">Birth date:</label><input type="text" name="birth" id="datepicker"></p>
+					<p><label for="firstname" id="firstNameLabel">First name:</label> <input type="text" name="firstname"> </p>
+					<p><label for="latsname" id="lastNameLabel">Last name:</label> <input type="text" name="lastname"></p>
+					<p><label for="email" id="emailLabel">E-mail:</label><input type="email" name="email"></p>
+					<p> <label for="pass" id="passwordLabel">Password:<span>***</span></label><input type="password" name="pass" required minlength="6"></p>
+					<p><label for="birth" id="dateOfBirthLabel">Birth date:<span>*</span></label><input type="text" name="birth" id="datepicker" required></p>
 					<p> <input type="submit" value="Register"></p>
 					<div id="tooltip">
-					<p>* - required, minimum 4 characters long.<p>
-					<p>**- required, minimum 6 characters long.<p>
+					<p>*- required<p>
+					<p>** - required, minimum 4 characters long.<p>
+					<p>***- required, minimum 6 characters long.<p>
+					
 					</div>
 			</form>
 		</div>
@@ -73,6 +75,10 @@ String state = (String) request.getAttribute("state");
 	       request.removeAttribute(e.nextElement());
 	%>
 	<div class="failure">Registration failed. </div>
+	<%
+}else if(state!=null && state.equals("LOGIN_FAILURE")){
+	%>
+	<div class="failure">Login failed. </div>
 	<%
 }
 %>

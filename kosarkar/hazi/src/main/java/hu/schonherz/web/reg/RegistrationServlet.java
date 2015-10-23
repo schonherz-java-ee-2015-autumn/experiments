@@ -1,6 +1,8 @@
 package hu.schonherz.web.reg;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hu.schonherz.web.model.User;
+import hu.schonherz.web.validation.Validator;
 
 /**
  * Servlet implementation class RegistrationServlet
@@ -47,9 +50,38 @@ public class RegistrationServlet extends HttpServlet {
 		String lastName = request.getParameter("lastname");
 		String password = request.getParameter("pass");
 		String email = request.getParameter("email");
-		Date date = new Date(request.getParameter("birth"));
-		if(userName.isEmpty() || password.isEmpty())
+		Date date = new Date();
+		
+		if(userName==null || userName.isEmpty()){
+			request.setAttribute("state", "FAILURE");
 			response.sendRedirect("index.jsp");
+		}
+		
+		
+		if(password==null || password.isEmpty()){
+			request.setAttribute("state", "FAILURE");
+			response.sendRedirect("index.jsp");
+		}
+			
+		if(Validator.isValidDate(request.getParameter("birth"), Validator.DATEFORMAT)){
+			SimpleDateFormat dateF = new SimpleDateFormat(Validator.DATEFORMAT);
+			dateF.setLenient(false);
+			try {
+				date = dateF.parse(request.getParameter("birth"));
+			} catch (ParseException e) {
+			
+			}	
+		}else{
+			request.setAttribute("state", "FAILURE");
+			response.sendRedirect("index.jsp");
+		}
+		if(!Validator.isValidEmailAddress(email)){
+			request.setAttribute("state", "FAILURE");
+			response.sendRedirect("index.jsp");
+		}
+		
+		
+			
 		
 		if(!users.containsKey(userName)){
 			 synchronized (mutex){

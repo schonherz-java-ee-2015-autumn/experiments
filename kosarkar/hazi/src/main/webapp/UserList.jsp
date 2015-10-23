@@ -43,13 +43,9 @@
 			});
 		</script>
 
-	<button id="return_button"> Back to the main page</button>
+	
 	</div>
-<script type="text/javascript">
-	$("#return_button").click(function(){
-		document.location.replace("UserList.jsp");
-	});
-</script>
+
 
 </body>
 </html>

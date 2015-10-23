@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="default.css">
+<link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.theme.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>

@@ -38,12 +38,13 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("username");
 		String password = request.getParameter("pass");
-		if(RegistrationServlet.users!=null && userName.length()>3 && password.length()>3){
+		if(RegistrationServlet.users!=null && userName!=null && password!=null){
 		if(RegistrationServlet.users.containsKey(userName) && 
 			RegistrationServlet.users.get(userName).getPass().equals(password)){
-				response.sendRedirect("ShowListServlet");
+				response.sendRedirect("UserList.jsp");
 		}else{
-			response.getWriter().append("Incorrect username or password.");
+			request.setAttribute("state", "LOGIN_FAILURE");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		}else{
 			response.sendRedirect("index.jsp");
