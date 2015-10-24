@@ -1,0 +1,75 @@
+.warning{
+	
+	color:red;
+}
+.success{
+	text-align: center;
+	font-family:"Segoe UI",Arial,sans-serif;
+	margin:auto;
+	padding:10px;
+	border:1px;
+	border-radius:20px;
+	color:white;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#35c12e+4,35c12e+4,299a0b+88 */
+background: #35c12e; /* Old browsers */
+background: -moz-linear-gradient(top,  #35c12e 4%, #35c12e 4%, #299a0b 88%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(4%,#35c12e), color-stop(4%,#35c12e), color-stop(88%,#299a0b)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #35c12e 4%,#35c12e 4%,#299a0b 88%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #35c12e 4%,#35c12e 4%,#299a0b 88%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #35c12e 4%,#35c12e 4%,#299a0b 88%); /* IE10+ */
+background: linear-gradient(to bottom,  #35c12e 4%,#35c12e 4%,#299a0b 88%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35c12e', endColorstr='#299a0b',GradientType=0 ); /* IE6-9 */
+	margin-top:20px;
+}
+.failure{
+	margin-top:20px;
+	text-align: center;
+	font-family:"Segoe UI",Arial,sans-serif;
+	margin:auto;
+	padding:10px;
+	border:1px;
+	border-radius:20px;
+	color:black;
+	font-style:bold;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f85032+0,f16f5c+0,f6290c+16,e01616+73,e73827+100 */
+background: #f85032; /* Old browsers */
+background: -moz-linear-gradient(top,  #f85032 0%, #f16f5c 0%, #f6290c 16%, #e01616 73%, #e73827 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f85032), color-stop(0%,#f16f5c), color-stop(16%,#f6290c), color-stop(73%,#e01616), color-stop(100%,#e73827)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f85032 0%,#f16f5c 0%,#f6290c 16%,#e01616 73%,#e73827 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f85032 0%,#f16f5c 0%,#f6290c 16%,#e01616 73%,#e73827 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f85032 0%,#f16f5c 0%,#f6290c 16%,#e01616 73%,#e73827 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f85032 0%,#f16f5c 0%,#f6290c 16%,#e01616 73%,#e73827 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#e73827',GradientType=0 ); /* IE6-9 */
+	
+}
+body{
+	background-color:#333;
+}
+#main{
+    margin: auto;
+    width: 480px;
+    padding: 10px;
+
+}
+
+form{
+	width:400px;
+}
+form input{
+	float:right;
+	font-size:12px;
+}
+form span{
+	font-size:8px;
+	color:red;
+	font-style:italic;
+}
+form label{
+	font-size:14px;
+}
+
+
+#tooltip{
+	font-size:12px;
+	font-style: italic;
+}
