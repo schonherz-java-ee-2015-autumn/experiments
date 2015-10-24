@@ -3,16 +3,15 @@
 
 $(document).ready(function() {
 	
-	$(".registerLink").click( function( event ) {
-		event.preventDefault();
-		$(".overlay").fadeToggle("fast");
+	$("table").DataTable({
+		"jQueryUI": true,
+		"ajax" : {
+			"url" : "GetUserTableServlet",
+			"type" : "POST",
+			"dataSrc":"",
+		},
+		"columns" : [{"data" : "name"}, {"data" : "email"}]
 	});
-	
-	$(".close").click(function(){
-        $(".overlay").fadeToggle("fast");
-    });
-	
-	$("table").DataTable();
 	
 	$(".menu").menu();
 	
