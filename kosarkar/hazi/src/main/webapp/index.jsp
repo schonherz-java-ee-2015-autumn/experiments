@@ -13,20 +13,22 @@
 		       minDate: "-120y", 
 		       maxDate: -1 
 		    });
-		$( "input[type=submit], a, button" )
-	      .button();
+		/*$( "input[type=submit], a, button" )
+	      .button();*/
 	      
 	});
 	
-	  $( "form" ).submit(function( event ) {
-		  
-    	  var d = validateDate($("#dateId").val(),"MM/dd/yyyy");
-    	  
+	  $( "#regform" ).submit(function( event ) {
+		  alert("submit");
+    	  var d = validateDate($("#birth").val(),"MM/dd/yyyy");
+    	  alert("d=" + d);
     	  if(d != "true") {
-   	 		 $('#dateIdL').addClass('warning');   
+    		  alert("true");
+   	 		 $('#dateOfBirthLabel').addClass('warning');   
    	 		  event.preventDefault();   	 		  
    	 	  } else {
-   	 		 $('#dateIdL').removeClass('warning');  
+   	 		  alert("false");
+   	 		 $('#dateOfBirthLabel').removeClass('warning');  
    	 	  }
     
     	});
@@ -63,7 +65,7 @@
 
 		<h2>Registration</h2>
 		<div>
-			<form action="RegistrationServlet" method="post" class="cmxform">
+			<form action="RegistrationServlet" method="post" id="regform">
 					<p><label for="username" id="usernameLabel"> User name:<span>**</span> </label>
 					<input type="text" name="username" minlength="4" required></p> 
 					<p><label for="firstname" id="firstNameLabel">First name:</label> <input type="text" name="firstname"> </p>

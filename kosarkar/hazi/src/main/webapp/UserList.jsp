@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div id="main">
-		<table id="example" class="display">
+		<table id="users" class="display">
 			<thead>
 				<tr>
 					<th>First Name</th>
@@ -24,7 +24,7 @@
 		</table>
 		<script>
 			$(document).ready(function() {
-				$('#example').dataTable({
+				$('#users').dataTable({
 					"bJQueryUI" : true,
 					"ajax" : "UserListServlet",
 
