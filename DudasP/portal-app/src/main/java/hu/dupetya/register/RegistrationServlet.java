@@ -6,23 +6,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import hu.dupetya.register.validation.ProgressResult;
+import hu.dupetya.register.validation.Result;
 import hu.schonherz.training.java.solid.account.AccountRegistrationException;
 import hu.schonherz.training.java.solid.account.AccountRegistrationRequest;
-import hu.schonherz.training.java.solid.validator.ViolationException;
+import hu.schonherz.training.java.solid.account.AccountService;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class RegistrationServlet
  */
-@WebServlet("/RegisterServlet")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/RegistrationServlet")
+public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public RegisterServlet() {
+	public RegistrationServlet() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -41,34 +45,22 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		AccountRegistrationRequest registerRequest = accountRegistrationRequestFromHTTPRequest(request);
-
-		RegistrationFactory regFactory = new RegistrationFactory(this);
-
+		HttpSession session = request.getSession();
+		AccountService regService = (AccountService) session.getAttribute("accountService");
+		ProgressResult regRes = new ProgressResult();
+		regRes.setResult(Result.SUCCESS);
+		regRes.setMessage("Successfully registered");
+		session.setAttribute("result", regRes);
 		try {
-			regFactory.getAccountService().register(registerRequest);
-		} catch (ViolationException e) {
-			e.printStackTrace();
+			regService.register((AccountRegistrationRequest) session.getAttribute("registerInfo"));
 		} catch (AccountRegistrationException e) {
-			e.printStackTrace();
+
+			regRes.setResult(Result.FAIL);
+			regRes.setMessage(e.getMessage());
+		} finally {
+			session.removeAttribute("registerInfo");
+			response.sendRedirect("register.jsp");
 		}
-
-		response.sendRedirect("/WebApp/");
-	}
-
-	protected AccountRegistrationRequest accountRegistrationRequestFromHTTPRequest(HttpServletRequest request) {
-		AccountRegistrationRequest res = new AccountRegistrationRequest();
-
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String email = request.getParameter("email");
-
-		res.setUsername(username);
-		res.setPassword(password);
-		res.setPasswordConfirmation(password);
-		res.setEmail(email);
-
-		return res;
 	}
 
 }

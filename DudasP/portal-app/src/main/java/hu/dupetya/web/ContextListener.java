@@ -1,24 +1,22 @@
-package hu.dupetya.web.listener;
+package hu.dupetya.web;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import hu.schonherz.training.java.solid.account.model.Account;
-
 /**
- * Application Lifecycle Listener implementation class Config
+ * Application Lifecycle Listener implementation class ContextListener
  *
  */
 @WebListener
-public class Config implements ServletContextListener {
+public class ContextListener implements ServletContextListener {
 
 	/**
 	 * Default constructor.
 	 */
-	public Config() {
+	public ContextListener() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,7 +33,7 @@ public class Config implements ServletContextListener {
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		arg0.getServletContext().setAttribute("users", new LinkedList<Account>());
+		arg0.getServletContext().setAttribute("users", new ArrayList<>());
 	}
 
 }
