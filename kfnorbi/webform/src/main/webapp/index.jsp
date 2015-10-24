@@ -3,6 +3,15 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
+	function validatecolor(clazz){
+		$("tr"+clazz+"[violated=\"true\"]").animate({
+			backgroundColor : "#fa0000"
+		});
+		$("tr"+clazz+"[violated=\"false\"]").animate({
+			backgroundColor : "#00ff00"
+		});
+	}
+
 	$(function() {
 
 		$("#datepicker").datepicker({
@@ -10,6 +19,11 @@
 			maxDate : new Date()
 		}, "option", "dateFormat", "yy-mm-dd");
 		$("#datepicker").datepicker("option", "dateFormat", "mm-dd-yy");
+
+		$("#dialog-message").dialog({
+			modal : true,
+			autoOpen : false
+		});
 
 		$("select").selectmenu();
 
@@ -31,6 +45,7 @@
 							"confirmpassword" : $(
 									"input[name=\"confirmpassword\"]").val(),
 							"email" : $("input[name=\"email\"]").val(),
+							"city" : $("input[name=\"city\"]").val(),
 							"phonenumber" : $("input[name=\"phonenumber\"]")
 									.val(),
 							"dateofbirth" : $("input[name=\"dateofbirth\"]")
@@ -39,27 +54,30 @@
 						success : function(result) {
 							console.log(JSON.stringify(result))
 
+							$.each($("tr[violated]"), function(key, value) {
+								$(value).attr("violated", "false")
+							});
+
 							if (result.length !== 0) {
-								$.each($("td[violated]"), function(key, value) {
-									$(value).attr("violated", "false")
-								});
 
 								$.each(result, function(i, val) {
 
-									//	 								console.log($(val.error).parent())
 									$("." + val.error).attr("violated", "true")
 
 								});
+
 							} else {
+
+								$("div#dialog-message").dialog('open')
+								console.log("")
 
 								setTimeout(function() {
 									window.location.href = "RegistredUsers";
 								}, 2000);
 
-								$("#dialog-message").dialog({
-									modal : true
-								});
 							}
+
+							validatecolor("")
 
 						},
 						error : function(result) {
@@ -79,11 +97,9 @@
 					},
 					success : function(result) {
 						if (result === "ok") {
-							$("#usercheck").attr("status", "valid")
-							$("#usercheck").html("&#10004;")
+							$("tr.username").attr("violated", "false")
 						} else {
-							$("#usercheck").attr("status", "invalid")
-							$("#usercheck").html("&#10008;")
+							$("tr.username").attr("violated", "true")
 						}
 					},
 					error : function(result) {
@@ -91,10 +107,8 @@
 					},
 					dataType : "text"
 				});
-			} else {
-				$("#usercheck").attr("status", "none")
-				$("#usercheck").html("")
 			}
+			validatecolor(".username")
 		});
 
 		$("input[name=\"confirmpassword\"], input[name=\"password\"]")
@@ -105,34 +119,25 @@
 								if ($("input[name=\"password\"]").val().trim() === $(
 										"input[name=\"confirmpassword\"]")
 										.val().trim()) {
-									$("td#passwordcheck").attr("status",
-											"valid")
-									$("td#passwordcheck").html("&#10004;")
+									$("tr.confirmpassword").attr("violated",
+											"true")
 								} else {
-									$("td#passwordcheck").attr("status",
-											"invalid")
-									$("td#passwordcheck").html("&#10008;")
+									$("tr.confirmpassword").attr("violated",
+											"false")
 								}
-							} else {
-								$("td#passwordcheck").attr("status", "none")
-								$("td#passwordcheck").html("")
-							}
+							} 
 						});
 
 		$("#datepicker").change(function() {
 			if ($("#datepicker").val().trim() != "") {
 				var date = new Date($("#datepicker").val().trim())
 				if (date != "Invalid Date") {
-					$("td#datecheck").attr("status", "valid")
-					$("td#datecheck").html("&#10004;")
+					$("tr.dateofbirth").attr("violated", "true")
 				} else {
-					$("td#datecheck").attr("status", "invalid")
-					$("td#datecheck").html("&#10008;")
+					$("tr.dateofbirth").attr("violated", "false")
 				}
-			} else {
-				$("td#datecheck").attr("status", "none")
-				$("td#datecheck").html("")
 			}
+			validatecolor(".dateofbirth")
 		});
 
 	});
@@ -144,6 +149,11 @@
 <body>
 	<form action="RegistrationServlet" method="post">
 		<table class="formtable" align="center">
+			<thead>
+				<tr>
+					<th colspan="3">Registration</th>
+				</tr>
+			</thead>
 			<tbody>
 				<tr class="title" violated="false">
 					<td>Title:</td>
@@ -152,70 +162,70 @@
 							<option>Mrs.</option>
 							<option>Miss</option>
 					</select>
-					<td />
 				</tr>
 				<tr class="firstname" violated="false">
 					<td>First name:</td>
 					<td><input name="firstname" placeholder="First name"></td>
-					<td />
+
 				</tr>
 				<tr class="lastname" violated="false">
 					<td>Last name:</td>
 					<td><input name="lastname" placeholder="Last name"></td>
-					<td />
+
 				</tr>
 				<tr class="username" violated="false">
 					<td>Username:</td>
 					<td><input name="username" placeholder="Username"></td>
-					<td id="usercheck" class="result" status="none"></td>
+
 				</tr>
 				<tr class="password" violated="false">
 					<td>Password:</td>
 					<td><input type="password" name="password"
 						placeholder="Password"></td>
-					<td />
+
 				</tr>
 				<tr class="confirmpassword" violated="false">
 					<td>Confirm password:</td>
 					<td><input type="password" name="confirmpassword"
 						placeholder="Confrim Password"></td>
-					<td id="passwordcheck" class="result" status="none"></td>
+
 				</tr violated="false">
 
 				<tr class="email" violated="false">
 					<td>Email:</td>
 					<td><input name="email" placeholder="Email"></td>
-					<td />
+
 				</tr>
 				<tr class="phonenumber" violated="false">
 					<td>Phone number:</td>
 					<td><input name="phonenumber" placeholder="Phone number"></td>
-					<td />
+
 				</tr>
 				<tr class="dateofbirth" violated="false">
 					<td>Date of birth:</td>
 					<td><input id="datepicker" name="dateofbirth"
 						placeholder="MM-DD-YYYY"></td>
-					<td id="datecheck" class="result" status="none"></td>
+
 				</tr>
 				<tr class="city" violated="false">
 					<td>Location:</td>
 					<td><input name="city" placeholder="Location"></td>
-					<td />
+
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="3">
 						<button id="submitbutton" type="button">Submit</button>
 					</td>
 			</tbody>
 		</table>
 	</form>
 
-	<div id="registrationresult">
-		<div id="dialog-message" title="Registration successful.">
-			<center>
+
+	<div class="result">
+		<div id="registrationresult">
+			<div id="dialog-message" title="Registration successful.">
 				<img src="tick.png">
-			</center>
+			</div>
 		</div>
 	</div>
 </body>

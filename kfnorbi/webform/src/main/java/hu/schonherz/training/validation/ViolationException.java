@@ -4,6 +4,11 @@ import java.util.List;
 
 public class ViolationException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	List<Violation> violations;
 
 	public ViolationException(List<Violation> violations) {

@@ -57,7 +57,7 @@ public class PersonBuilder {
 	 *            the dateOfBirth to set
 	 */
 	public PersonBuilder setDateOfBirth(String dateOfBirth) {
-		SimpleDateFormat format = new SimpleDateFormat("MM-dd-YYYY");
+		SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 		try {
 			this.dateOfBirth = format.parse(dateOfBirth);
 		} catch (ParseException e) {

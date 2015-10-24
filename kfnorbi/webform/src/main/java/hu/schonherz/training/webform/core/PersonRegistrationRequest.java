@@ -1,7 +1,6 @@
 package hu.schonherz.training.webform.core;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class PersonRegistrationRequest implements Serializable {
 	/**

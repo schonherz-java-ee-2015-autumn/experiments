@@ -57,7 +57,7 @@ public class SubmitServlet extends HttpServlet {
 		Gson gson = new Gson();
 		try {
 			PersonRegister.register(converter.convert());
-			gson.toJson(Collections.<Violation>emptyList(),response.getWriter());
+			gson.toJson(Collections.<Violation> emptyList(), response.getWriter());
 		} catch (ViolationException e) {
 			gson.toJson(e.getViolations(), response.getWriter());
 		}

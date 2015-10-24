@@ -5,12 +5,12 @@ import java.util.Arrays;
 import hu.schonherz.training.validation.RuleValidator;
 import hu.schonherz.training.validation.ViolationException;
 import hu.schonherz.training.validation.webform.rules.DateStringRule;
-import hu.schonherz.training.validation.webform.rules.EmailPresentRule;
 import hu.schonherz.training.validation.webform.rules.EmailValidatorRule;
 import hu.schonherz.training.validation.webform.rules.FirstNameRule;
 import hu.schonherz.training.validation.webform.rules.LastNameRule;
+import hu.schonherz.training.validation.webform.rules.LocationValidatorRule;
 import hu.schonherz.training.validation.webform.rules.PasswordConfirmationIsTheSameRule;
-import hu.schonherz.training.validation.webform.rules.PhoneNumberPresentRule;
+import hu.schonherz.training.validation.webform.rules.PasswordValidationRule;
 import hu.schonherz.training.validation.webform.rules.PhoneNumberRule;
 import hu.schonherz.training.validation.webform.rules.UserNameOccupiedRule;
 import hu.schonherz.training.webform.bean.Person;
@@ -27,8 +27,9 @@ public class PersonRegistrationRequestToPersonConverter {
 	public Person convert() throws ViolationException {
 
 		RuleValidator<PersonRegistrationRequest> ruleValidator = new RuleValidator<PersonRegistrationRequest>(
-				Arrays.asList(new DateStringRule(), new EmailPresentRule(), new EmailValidatorRule(),
-						new FirstNameRule(), new LastNameRule(), new PhoneNumberRule(), new PhoneNumberPresentRule(),new UserNameOccupiedRule(),new PasswordConfirmationIsTheSameRule()));
+				Arrays.asList(new DateStringRule(), new EmailValidatorRule(), new FirstNameRule(), new LastNameRule(),
+						new PhoneNumberRule(), new UserNameOccupiedRule(), new PasswordConfirmationIsTheSameRule(),
+						new LocationValidatorRule(), new PasswordValidationRule()));
 
 		ruleValidator.validate(request);
 

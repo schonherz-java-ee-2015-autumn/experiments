@@ -20,7 +20,7 @@ public class PhoneNumberRule implements Validator<PersonRegistrationRequest> {
 	@Override
 	public List<Violation> validate(PersonRegistrationRequest object) throws ViolationException {
 
-		return StringUtils.isBlank(object.getPhoneNumber()) || object.getPhoneNumber().trim().matches("\\+?[{10}[0-9]][0-9]+") ? Collections.emptyList()
+		return StringUtils.isNotBlank(object.getPhoneNumber()) && object.getPhoneNumber().trim().matches("\\+?[{10}[0-9]][0-9]+") ? Collections.emptyList()
 				: Arrays.asList(new Violation("phonenumber", "This phone number is not valid"));
 	}
 

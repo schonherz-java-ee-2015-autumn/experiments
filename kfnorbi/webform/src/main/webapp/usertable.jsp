@@ -21,35 +21,27 @@
 
 <script>
 	$(function() {
-
-		$.ajax({
-			url : "UserProviderServlet",
-			method : "POST",
-			success : function(result) {
-				$.each(result, function(i, val) {
-
-					$.each(result, function(i, person) {
-						var element = '<tr><td>' + person.title + " "
-								+ person.firstName + " " + person.lastName
-								+ '</td><td>' + person.userName + '</td><td>'
-								+ person.email + '</td><td>'
-								+ person.phoneNumber + '</td> + <td>'
-								+ person.dateOfBirth + '</td> <td>'
-								+ person.city + '</td></tr>';
-
-						$("tbody").append(element)
-					});
-
-				});
+		$('table').DataTable({
+			"ajax" : {
+				"url" : "UserProviderServlet",
+				"dataSrc" : ""
 			},
-			error : function(result) {
-				console.log(result)
-			},
-			dataType : "json"
+			"columns" : [ {
+				"data" : "userName"
+			}, {
+				"data" : "name"
+			}, {
+				"data" : "email"
+			}, {
+				"data" : "phoneNumber"
+			}, {
+				"data" : "dateOfBirth"
+			}, {
+				"data" : "city"
+			} ]
 		});
 
-		$('table').DataTable();
-
+		
 	});
 </script>
 <title>Registred so far</title>
@@ -59,8 +51,8 @@
 	<table>
 		<tfoot>
 			<tr>
-				<th>Name</th>
 				<th>Username</th>
+				<th>Name</th>
 				<th>Email</th>
 				<th>Phone number</th>
 				<th>Date of birth</th>
@@ -69,8 +61,8 @@
 		</tfoot>
 		<thead>
 			<tr>
-				<th>Name</th>
 				<th>Username</th>
+				<th>Name</th>
 				<th>Email</th>
 				<th>Phone number</th>
 				<th>Date of birth</th>

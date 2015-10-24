@@ -1,36 +1,42 @@
 @CHARSET "UTF-8";
 
-.formtable{
+.formtable {
+	margin: auto;
 	border-radius: 15px 50px;
-    background: #C8C8C8 ;
-    padding: 20px; 
-    width: 30%;
-    height: 50%; 
+	background: #C8C8C8;
+	padding: 20px;
+	width: 30%;
+	height: 50%;
+	border: collapse;
 }
 
-tr{
-	border-bottom:1pt solid black;
+h1 {
+	text-align: center;
 }
 
-table.formtable{
-    border: 1px solid white;
-    margin: 0px;
-    text-align:center;
-    vertical-align: middle !important;
+table.formtable {
+	border: 1px solid white;
 }
 
-body{
-	background-color: #808080; 
+table.formtable>td {
+	border-radius: 15px 50px;
 }
 
-[status="valid"]{
-	color: green;
+body {
+	background-color: #808080;
 }
 
-[status="invalid"]{
-	color: red;
+td {
+	text-align: center;
+	border-collapse: collapse;
 }
 
-[status="none"]{
-	color: black;
+table.formtable>thead>th {
+	color: white;
+	font-size: 40;
+	font-weight: bold;
+}
+
+#dialog-message>img {
+	align: center;
 }

@@ -31,7 +31,8 @@ public class UserProviderServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Gson gson = new Gson();
-		gson.toJson(PersonRegister.registratedUsers,response.getWriter());
+		response.setCharacterEncoding("utf-8");
+		gson.toJson(PersonRegister.publicUsers,response.getWriter());
 	}
 
 	/**
