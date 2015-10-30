@@ -9,4 +9,7 @@ public interface RegistrationUtil {
 	public List<User> getAllUser();
 
 	public User findUserByName(String username);
+	
+	public List<User> getUsers(String searchFor, int from, int lenght, String orderBy, String orderDirection);
+	
 }

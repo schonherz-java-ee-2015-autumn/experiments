@@ -50,8 +50,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if (userName != null && password != null) {
 			User user = dbUtil.findUserByName(userName);
-			if (user != null) {
-				user.getPass().equals(password);
+			if (user != null && user.getPass().equals(password)) {
 				response.sendRedirect("UserList.jsp");
 			} else {
 				request.setAttribute("state", "LOGIN_FAILURE");

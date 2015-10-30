@@ -69,7 +69,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			conn = connection.getConnection();
 			Statement stmt = conn.createStatement();
 			result = stmt.executeQuery(getAllUserQuery);
-			;
+			
 			while (result.next()) {
 				String username = result.getString("username");
 				String firstName = result.getString("first_name");
@@ -102,6 +102,69 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 		/*-----------------------*/
 
 		return users;
+	}
+
+	public List<User> getUsers(String searchFor, int from, int lenght, String orderBy, String orderDirection) {
+		String getUsersQuery = "select * from web_app.users "
+				+ "where first_name like ? or last_name like ?"
+				+ " order by ? "+ orderDirection+" limit ?,?";
+		
+		ResultSet result = null;
+		List<User> users = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement getUser = null;
+		try {
+			ConnectionUtil connection = new ConnectionUtil();
+			conn = connection.getConnection();
+			getUser = conn.prepareStatement(getUsersQuery);
+			getUser.setString(1, "%" + searchFor + "%");
+			getUser.setString(2, "%" + searchFor + "%");
+			getUser.setString(3, orderBy);
+			getUser.setInt(4, from);
+			getUser.setInt(5, lenght);
+			result = getUser.executeQuery();
+			while (result.next()) {
+				String userName = result.getString("username");
+				String firstName = result.getString("first_name");
+				String lastName = result.getString("last_name");
+				String email = result.getString("email");
+				Date dateOfBirth = result.getDate("birthdate");
+				String password = result.getString("pwd");
+				users.add(new User(userName, firstName, lastName, password, email, dateOfBirth));
+			
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+
+		} finally {
+			if(getUser!=null)
+				try {
+					getUser.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			if (result != null) {
+				try {
+					result.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return users;
+
 	}
 
 	@Override
@@ -139,7 +202,8 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			}
 
 			try {
-				conn.close();
+				if (conn != null)
+					conn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

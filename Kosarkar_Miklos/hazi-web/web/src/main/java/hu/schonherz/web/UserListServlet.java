@@ -40,9 +40,18 @@ public class UserListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Gson gson = new Gson();
+		
+
+		 int length = Integer.parseInt(request.getParameter("length"));
+		 int from = Integer.parseInt(request.getParameter("start"));
+		 String searchFor = request.getParameter("search[value]");
+		 int orderBy = Integer.parseInt(request.getParameter("order[0][column]"));
+		 String orderByName = request.getParameter("columns[" + orderBy +"][data]");
+		 String orderDirection = request.getParameter("order[0][dir]");
+		
 		ArrayList<Helper> arrayList = new ArrayList<>();
-		List<User> users = dbUtil.getAllUser();
-		if(users!=null)
+		List<User> users =  dbUtil.getUsers(searchFor, from, length, orderByName, orderDirection);
+//				dbUtil.getAllUser();
 		for(User u: users){
 			arrayList.add(new Helper(u.getFirstName(), u.getLastName(), u.getEmail(), u.getDateOfBirth()));
 		}
@@ -76,36 +85,36 @@ public class UserListServlet extends HttpServlet {
 	}
 	
 	public static class Helper{
-		private String firstName;
-		private String lastName;
+		private String first_name;
+		private String last_name;
 		private String email;
-		private Date dateOfBirth;
+		private Date birthdate;
 		public Helper(String firstName, String lastName, String email, Date dateOfBirth) {
 			super();
-			this.firstName = firstName;
-			this.lastName = lastName;
+			this.first_name = firstName;
+			this.last_name = lastName;
 			this.email = email;
-			this.dateOfBirth = dateOfBirth;
+			this.birthdate = dateOfBirth;
 		}
 		
 		public Helper(){
 			
 		}
 
-		public String getFirstName() {
-			return firstName;
+		public String getFirst_name() {
+			return first_name;
 		}
 
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
+		public void setFirst_name(String firstName) {
+			this.first_name = firstName;
 		}
 
-		public String getLastName() {
-			return lastName;
+		public String getLast_name() {
+			return last_name;
 		}
 
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
+		public void setLast_name(String lastName) {
+			this.last_name = lastName;
 		}
 
 		public String getEmail() {
@@ -116,12 +125,12 @@ public class UserListServlet extends HttpServlet {
 			this.email = email;
 		}
 
-		public Date getDateOfBirth() {
-			return dateOfBirth;
+		public Date getBirthdate() {
+			return birthdate;
 		}
 
-		public void setDateOfBirth(Date dateOfBirth) {
-			this.dateOfBirth = dateOfBirth;
+		public void setBirthdate(Date dateOfBirth) {
+			this.birthdate = dateOfBirth;
 		}
 		
 	}

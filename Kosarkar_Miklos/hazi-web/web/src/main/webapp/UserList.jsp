@@ -26,16 +26,17 @@
 			$(document).ready(function() {
 				$('#users').dataTable({
 					"bJQueryUI" : true,
+					"serverSide": true,
 					"ajax" : "UserListServlet",
 
 					"columns" : [ {
-						"data" : "firstName"
+						"data" : "first_name"
 					}, {
-						"data" : "lastName"
+						"data" : "last_name"
 					}, {
 						"data" : "email"
 					}, {
-						"data" : "dateOfBirth"
+						"data" : "birthdate"
 					}
 
 					]
