@@ -8,9 +8,9 @@ public class ConnectionHandler {
 	public Connection getConnection() {
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/pelda", "travis", "");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/pelda", "root", "MySQL");
+			System.out.println("Sikeres kapcsolód");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return conn;

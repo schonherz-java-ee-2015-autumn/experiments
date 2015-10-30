@@ -11,9 +11,6 @@
 
 	<artifactId>web</artifactId>
 	<name>web</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -37,21 +34,24 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>hu.schonherz</groupId>
+			<artifactId>core</artifactId>
+			 <version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.schonherz</groupId>
+			<artifactId>common</artifactId>
+			 <version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>hazi</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
+				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.16.v20140903</version>
 				<configuration>
 					<webApp>
 						<contextPath>/WebApp</contextPath>

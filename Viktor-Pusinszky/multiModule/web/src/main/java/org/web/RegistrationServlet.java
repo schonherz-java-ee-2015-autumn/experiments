@@ -1,9 +1,6 @@
 package org.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,21 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.common.*;
+import org.core.*;
 /**
  * Servlet implementation class RedirectWithAttribute
  */
 @WebServlet("/RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	List<User> users = new ArrayList<User>();
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+	User user = null;
+	
 	public RegistrationServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -47,9 +41,11 @@ public class RegistrationServlet extends HttpServlet {
 		String password = request.getParameter("passwd");
 		String email = request.getParameter("email");
 		String date = request.getParameter("date");
-		users.add(new User(name,password,email,date));
+		
+		RegistrationUtilImpl regUtil = new RegistrationUtilImpl();
 		try{
-			request.getSession().setAttribute("userList", users);
+			regUtil.saveRegistration(new User(name, password, email, date));
+			request.getSession().setAttribute("userList", regUtil.getAllUser());
 			request.setAttribute("state", "OK");
 		}catch(Exception e) {
 			request.setAttribute("state", "ERROR");
@@ -58,5 +54,4 @@ public class RegistrationServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
 	}
-
 }

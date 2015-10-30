@@ -25,8 +25,8 @@ tfoot{
 	
 	$(function() {
 		$( "#date" ).datepicker();
-		$("#reglist").button();
 		$("#sendform").button();
+		$("#sendformreglist").button();
 		
 		$("#registr").submit(
 				function(event) {
@@ -90,24 +90,13 @@ tfoot{
 						<td><input type="text" name="date" id="date" title="Kérlek add meg a születési dátumod"></td>
 				</tr>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2">
-							<input type="submit" id="sendform" value="Küldés!">
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<a href="userList.jsp" id="reglist">Felhasználó listája</a>
-						</td>
-					</tr>
-				</tfoot>
 			</table>
+			<input type="submit" id="sendform" value="Küldés!">
+		</form>
+		<form action="RegistrationListServlet" method="get" id="reglist">
+			<input type="submit" id="sendformreglist" value="Regisztraltak listaja">
 		</form>
 	</div>
-	<form action="RegistrationListServlet" method="post" id="registr2">
-		<input type="submit" id="sendform" value="Küldés!">
-	</form>
 
 	<div align="center" id="registrationlist"></div>
 	<%
