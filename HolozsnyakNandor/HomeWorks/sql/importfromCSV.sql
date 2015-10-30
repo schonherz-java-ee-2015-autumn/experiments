@@ -1,0 +1,6 @@
+LOAD DATA INFILE 'e:/Java/training/homework/sql/sample.csv' 
+INTO TABLE importFromCSV
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS

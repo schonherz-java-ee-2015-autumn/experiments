@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+body{
+	align : center;
+	font-family: sans-serif;
+	background-color: #ccc;
+	
+}
+#uTable{
+	align : center;
+	text-align : center;
+	border : 1px;
+	border-radius: 15px;
+	border-color: black;
+	padding : 15px;
+	margin : auto;
+	background-color: #F1F2F2;
+}
+
+.warning{
+	border-color: red;
+	
+}
+
+td{
+	background-color: #D8D8D8;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+input{
+	width : 20em;
+	border-radius : 7px;
+	text-align: center;
+}
+#subbut{
+	width : 5em;
+}
+
+#uTableHead{
+	font-size: 25px;
+}
+h3#font{
+	text-align :center;
+	color : green;
+	
+	
+}
