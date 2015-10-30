@@ -1,0 +1,7 @@
+Invoking Maven for the goals: [org.apache.maven.plugins:maven-javadoc-plugin:2.10.3:test-javadoc] with no properties
+
+M2_HOME=X:\SCH_JavaEE\maven\maven
+MAVEN_OPTS=null
+JAVA_HOME=c:\Program Files\Java\jdk1.8.0_60\jre\..
+JAVA_OPTS=null
+
