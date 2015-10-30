@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<web-app xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+		xmlns = "http://xmlns.jcp.org/xml/ns/javaee"
+		xsi:schemaLocation = "http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+		version = "3.1">
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>GetUsres</servlet-name>
+  	<display-name>GetUsres</display-name>
+  	<description></description>
+  	<servlet-class>hu.schonherz.training.registrate.GetUsres</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Registration</servlet-name>
+  	<display-name>Registration</display-name>
+  	<description></description>
+  	<servlet-class>hu.schonherz.training.registrate.Registration</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ValidateDate</servlet-name>
+  	<display-name>ValidateDate</display-name>
+  	<description></description>
+  	<servlet-class>hu.schonherz.training.registrate.ValidateDate</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UserNameValidator</servlet-name>
+  	<display-name>UserNameValidator</display-name>
+  	<description></description>
+  	<servlet-class>hu.schonherz.training.registrate.UserNameValidator</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetUsres</servlet-name>
+  	<url-pattern>/GetUsres</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Registration</servlet-name>
+  	<url-pattern>/Registration</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ValidateDate</servlet-name>
+  	<url-pattern>/ValidateDate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserNameValidator</servlet-name>
+  	<url-pattern>/UserNameValidator</url-pattern>
+  </servlet-mapping>
+</web-app>
