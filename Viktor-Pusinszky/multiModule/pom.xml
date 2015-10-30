@@ -2,10 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>hu.schonherz</groupId>
 	<artifactId>multi-modul</artifactId>
 	<packaging>pom</packaging>
-	<name>hazi Maven Webapp</name>
+	<name>Parent Project</name>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<modules>
@@ -15,7 +16,6 @@
 	</modules>
 
 	<build>
-		<finalName>hazi</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -25,17 +25,6 @@
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-maven-plugin</artifactId>
-					<version>9.3.5.v20151012</version>
-					<configuration>
-						<webAppSourceDirectory>${project.basedir}/web/src/main/webapp</webAppSourceDirectory>
-						<webApp>
-							<contextPath>/WebApp</contextPath>
-						</webApp>
 					</configuration>
 				</plugin>
 			</plugins>

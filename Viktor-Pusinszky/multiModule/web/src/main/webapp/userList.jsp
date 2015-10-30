@@ -1,7 +1,8 @@
 <%@page import="java.io.Console"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,7 +54,7 @@ Table {
 </head>
 <body>
 	<%@page import="java.util.ArrayList"%>
-	<%@page import="org.web.User"%>
+	<%@page import="org.common.User"%>
 	<table border="2" id="userTable">
 		<thead>
 			<tr>
@@ -71,9 +72,7 @@ Table {
 				</td>
 			</tr>
 		</thead>
-		<tbody>
-			<%
-			
+		<%
 				if (session.getAttribute("userList") != null) {
 					ArrayList<User> itemsArray = (ArrayList<User>) session.getAttribute("userList");
 					for (int i = 0; i < itemsArray.size(); i++) {
@@ -105,16 +104,16 @@ Table {
 				} else {
 					%>
 					<tr>
-						<td colspan="4" >
+						<td colspan = 4>
 						<%
-						out.println("Nincs regisztalt felhasznalo!");
+							out.println("Nincs regisztalt felhasznalo!");
 						%>
 						</td>
+					
 					</tr>
 			<%		
 				}
 			%>
-		</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="4" ><a href="index.jsp" id="toIndex">Vissza a

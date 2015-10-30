@@ -2,6 +2,7 @@ package org.common;
 
 import java.util.List;
 
+
 public interface RegistrationUtil {
 
 	public void saveRegistration(User user);
@@ -9,4 +10,5 @@ public interface RegistrationUtil {
 	public List<User> getAllUser();
 	
 	public User findUserByName();
+	
 }
