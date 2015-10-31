@@ -104,11 +104,18 @@ public class RegistrationServlet extends HttpServlet {
 				 dbUtil.saveUser(new User(userName, firstName, lastName, password, email, date));
 				 request.setAttribute("state", "SUCCESS");
 			}else{
+				System.out.println("van már ilyen");
 				 request.setAttribute("state", "FAILURE");	
 			}
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 		}else{
+			System.out.println(" "+
+			Validator.isValidInput(userName) +
+			Validator.isValidInput(password) +
+			new DateValidator(birthDate).validate() +
+			new EmailValidator(email).validate());
+			
 			request.setAttribute("state", "FAILURE");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			return;

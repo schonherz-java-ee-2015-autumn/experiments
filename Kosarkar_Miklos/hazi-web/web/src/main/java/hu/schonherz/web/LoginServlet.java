@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import authentication.Authentication;
 import hu.schonherz.common.UserManager;
-import hu.schonherz.common.User;
 import hu.schonherz.web.core.UserManagerImpl;
+import hu.schonherz.web.core.authentication.Authentication;
 
 /**
  * Servlet implementation class RegistrationServlet
