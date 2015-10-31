@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configure id='wac' class="org.eclipse.jetty.webapp.WebAppContext">
+	<New id="DSTest" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg></Arg>
+		<Arg>jdbc/DSTest</Arg>
+		<Arg>
+			<New class="com.mchange.v2.c3p0.ComboPooledDataSource">
+				<Set name="driverClass">com.mysql.jdbc.Driver</Set>
+				<Set name="jdbcUrl">jdbc:mysql://localhost:3306/portaldb</Set>
+				<Set name="user">root</Set>
+				<Set name="password">mysql</Set>
+			</New>
+		</Arg>
+	</New>
+</Configure>
