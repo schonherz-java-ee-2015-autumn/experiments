@@ -9,14 +9,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import hu.schonherz.common.RegistrationUtil;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
+import hu.schonherz.common.UserManager;
 import hu.schonherz.common.User;
 
-public class RegistrationUtilImpl implements RegistrationUtil {
+public class UserManagerImpl implements UserManager {
 
 	@Override
 	public void saveUser(User user) {
-
+		StrongPasswordEncryptor pe = new StrongPasswordEncryptor();
 		PreparedStatement insertUser = null;
 
 		String insertUserQuery = "INSERT INTO web_app.users" + "(username,first_name, last_name, pwd, email, birthdate)"
@@ -30,12 +32,13 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			insertUser.setString(1, user.getUsername());
 			insertUser.setString(2, user.getFirstName());
 			insertUser.setString(3, user.getLastName());
-			insertUser.setString(4, user.getPass());
+			insertUser.setString(4, pe.encryptPassword(user.getPass()));
 			insertUser.setString(5, user.getEmail());
 			insertUser.setDate(6, new java.sql.Date(user.getDateOfBirth().getTime()));
 			insertUser.execute();
 
 		} catch (SQLException e) {
+			System.out.println(e.toString());
 
 		} finally {
 			if (insertUser != null) {
@@ -69,7 +72,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			conn = connection.getConnection();
 			Statement stmt = conn.createStatement();
 			result = stmt.executeQuery(getAllUserQuery);
-			
+
 			while (result.next()) {
 				String username = result.getString("username");
 				String firstName = result.getString("first_name");
@@ -105,10 +108,9 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 	}
 
 	public List<User> getUsers(String searchFor, int from, int lenght, String orderBy, String orderDirection) {
-		String getUsersQuery = "select * from web_app.users "
-				+ "where first_name like ? or last_name like ?"
-				+ " order by ? "+ orderDirection+" limit ?,?";
-		
+		String getUsersQuery = "select * from web_app.users " + "where first_name like ? or last_name like ?"
+				+ " order by ? " + orderDirection + " limit ?,?";
+
 		ResultSet result = null;
 		List<User> users = new ArrayList<>();
 		Connection conn = null;
@@ -131,14 +133,14 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 				Date dateOfBirth = result.getDate("birthdate");
 				String password = result.getString("pwd");
 				users.add(new User(userName, firstName, lastName, password, email, dateOfBirth));
-			
+
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 
 		} finally {
-			if(getUser!=null)
+			if (getUser != null)
 				try {
 					getUser.close();
 				} catch (SQLException e1) {

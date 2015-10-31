@@ -9,6 +9,7 @@ import javax.mail.internet.InternetAddress;
 
 public class Validator {
 	public static final String DATEFORMAT = "MM/dd/yyyy";
+	private static final int MINLENGTH = 4;
 	public static boolean isValidDate(String date, String format) {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
@@ -37,10 +38,10 @@ public class Validator {
 	}
 	
 	public static boolean isValidInput(String input){
-		if(input!=null && input.isEmpty()){
-			return false;
-		}else {
+		if(input!=null && !input.isEmpty() && input.length()>= MINLENGTH){
 			return true;
+		}else {
+			return false;
 		}
 	}
 }
