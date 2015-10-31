@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import hu.schonherz.common.RegistrationUtil;
+import hu.schonherz.common.UserManager;
 import hu.schonherz.common.User;
-import hu.schonherz.web.core.RegistrationUtilImpl;
+import hu.schonherz.web.core.UserManagerImpl;
 
 
 
@@ -25,13 +25,13 @@ import hu.schonherz.web.core.RegistrationUtilImpl;
 @WebServlet("/UserListServlet")
 public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private RegistrationUtil dbUtil;
+    private UserManager dbUtil;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public UserListServlet() {
         super();
-        dbUtil = new RegistrationUtilImpl();
+        dbUtil = new UserManagerImpl();
         // TODO Auto-generated constructor stub
     }
 

@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hu.schonherz.common.RegistrationUtil;
+import authentication.Authentication;
+import hu.schonherz.common.UserManager;
 import hu.schonherz.common.User;
-import hu.schonherz.web.core.RegistrationUtilImpl;
+import hu.schonherz.web.core.UserManagerImpl;
 
 /**
  * Servlet implementation class RegistrationServlet
@@ -18,14 +19,14 @@ import hu.schonherz.web.core.RegistrationUtilImpl;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RegistrationUtil dbUtil;
+	private UserManager dbUtil;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public LoginServlet() {
 		super();
-		dbUtil = new RegistrationUtilImpl();
+		dbUtil = new UserManagerImpl();
 
 	}
 
@@ -45,22 +46,29 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String userName = request.getParameter("username");
+		String username = request.getParameter("username");
 		String password = request.getParameter("pass");
-		
-		if (userName != null && password != null) {
-			User user = dbUtil.findUserByName(userName);
-			if (user != null && user.getPass().equals(password)) {
-				response.sendRedirect("UserList.jsp");
-			} else {
-				request.setAttribute("state", "LOGIN_FAILURE");
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
 
+		if (Authentication.isSuccessfulAuthentication(username, password)) {
+			response.sendRedirect("UserList.jsp");
 		} else {
 			request.setAttribute("state", "LOGIN_FAILURE");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
+
+		// if (username != null && password != null) {
+		// User user = dbUtil.findUserByName(username);
+		// if (user != null && user.getPass().equals(password)) {
+		// response.sendRedirect("UserList.jsp");
+		// } else {
+		// request.setAttribute("state", "LOGIN_FAILURE");
+		// request.getRequestDispatcher("index.jsp").forward(request, response);
+		// }
+		//
+		// } else {
+		// request.setAttribute("state", "LOGIN_FAILURE");
+		// request.getRequestDispatcher("index.jsp").forward(request, response);
+		// }
 
 	}
 
