@@ -1,0 +1,6 @@
+#binary files
+*.class
+
+#complete artifacts
+*.war
+*.jar
