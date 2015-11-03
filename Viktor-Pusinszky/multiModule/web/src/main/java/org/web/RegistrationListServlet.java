@@ -32,9 +32,7 @@ public class RegistrationListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RegistrationUtilImpl regUtil = new RegistrationUtilImpl();
 		request.getSession().setAttribute("userList", regUtil.getAllUser());
-		String nextPage = "/userList.jsp";
-		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
-		rd.forward(request, response);
+		response.sendRedirect("userList.jsp");
 	}
 
 	/**

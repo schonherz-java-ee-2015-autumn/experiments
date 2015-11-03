@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,51 +8,58 @@
 	href="http://code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style>
 .warning {
 	color: red;
 	font-weight: bold;
 	border: 34;
 }
-tfoot{
- text-align: center;
+#SikertelenRegisztracioID {
+	color : red ;
+	font-weight: bold;
+	font-size: 26px;
 }
-
+#SikeresRegisztracioID {
+	color : green ;
+	font-weight: bold;
+	font-size: 26px;
+}
 </style>
+
 <script>
-	
-	
 	$(function() {
-		$( "#date" ).datepicker();
+
+		$("#date").datepicker();
 		$("#sendform").button();
 		$("#sendformreglist").button();
-		
-		$("#registr").submit(
+		$("#registrationwform").submit(
 				function(event) {
-
 					if (!$("#user").val()) {
 						$("#userL").addClass("warning");
 						event.preventDefault();
 					} else {
 						$('#userL').removeClass('warning');
 					}
-					if (!$("#passwd").val()
-							|| $("#passwd").val() != $("#passwd2").val()) {
-						$("#passwdL").addClass("warning");
-						$("#passwd2L").addClass("warning");
+					if (!$("#password").val()
+							|| $("#password").val() != $("#password2").val()) {
+						$("#passwordL").addClass("warning");
+						$("#password2L").addClass("warning");
 						event.preventDefault();
 					} else {
-						$('#passwdL').removeClass('warning');
-						$('#passwd2L').removeClass('warning');
+						$('#passwordL').removeClass('warning');
+						$('#password2L').removeClass('warning');
 					}
-
 					if (!$("#email").val()) {
 						$("#emailL").addClass("warning");
 						event.preventDefault();
 					} else {
 						$('#emailL').removeClass('warning');
+					}
+					if (!$("#date").val()) {
+						$("#dateL").addClass("warning");
+						event.preventDefault();
+					} else {
+						$('#dateL').removeClass('warning');
 					}
 				});
 	});
@@ -61,66 +69,64 @@ tfoot{
 </head>
 <body>
 	<div align="center" id="registration">
-		<form action="RegistrationServlet" method="post" id="registr">
+		<form action="RegistrationServlet" method="post" id="registrationform">
 			<table border="2" id="regTable">
 				<thead>
 					<tr>
-						<td colspan="2" align="center"><h2>Regisztáció</h2></td>
+						<td colspan="2" align="center">
+							<h2>RegisztÃ¡ciÃ³</h2>
+						</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><label id="userL">Felhasználónév: </label></td>
-						<td><input type="text" name="user" id="user" title="Kérlek add meg a felhasználóneved"></td>
+						<td><label id="userL">FelhasznÃ¡lÃ³nÃ©v:</label></td>
+						<td><input type="text" name="user" id="user"></td>
 					</tr>
 					<tr>
-						<td><label id="passwdL">Jelszó: </label></td>
-						<td><input type="password" name="passwd" id="passwd" title="Kérlek add meg a jelszavad"></td>
+						<td><label id="passwordL">JelszÃ³:</label></td>
+						<td><input type="password" name="password" id="password"></td>
 					</tr>
 					<tr>
-						<td><label id="passwd2L">Jelszó újra: </label></td>
-						<td><input type="password" name="passwd2" id="passwd2" title="Kérlek add meg a jelszavad újra"></td>
+						<td><label id="password2L">JelszÃ³ Ãºjra:</label></td>
+						<td><input type="password" name="password2" id="password2"></td>
 					</tr>
 					<tr>
-						<td><label id="emailL">E-mail cím: </label></td>
-						<td><input type="email" name="email" id="email" title="Kérlek add meg az e-mail címed"></td>
+						<td><label id="emailL">E-mail cÃ­m:</label></td>
+						<td><input type="email" name="email" id="email"></td>
 					</tr>
 					<tr>
-						<td><label id="dateIdL">Születési dátum:</label></td>
-						<td><input type="text" name="date" id="date" title="Kérlek add meg a születési dátumod"></td>
-				</tr>
+						<td><label id="dateL">SzÃ¼letÃ©si dÃ¡tum:</label></td>
+						<td><input type="text" name="date" id="date"></td>
+					</tr>
 				</tbody>
 			</table>
-			<input type="submit" id="sendform" value="Küldés!">
+			<input type="submit" id="sendform" value="KÃ¼ldÃ©s!">
 		</form>
 		<form action="RegistrationListServlet" method="get" id="reglist">
-			<input type="submit" id="sendformreglist" value="Regisztraltak listaja">
+			<input type="submit" id="sendformreglist"
+				value="Regisztraltak listaja">
 		</form>
 	</div>
 
-	<div align="center" id="registrationlist"></div>
-	<%
-		String state = (String) request.getAttribute("state");
-
-		if (state != null && state.equals("OK")) {
-	%>
-	<div>
-		<font color="green" size="26"> Sikeres regisztráció! </font>
-		<script>
-			setTimeout(function() {
-				document.location.href = "userList.jsp"
-			}, 1000);
-		</script>
+	<div align="center" id="registrationState">
+		<c:choose>
+			<c:when test="${state == 'OK'}">
+				<div>
+					<font id="SikeresRegisztracioID">Sikeres regisztrÃ¡ciÃ³!</font>
+					<script>
+// 						setTimeout(function() {
+// 							document.location.href = "userList.jsp"
+// 						}, 1000);
+					</script>
+				</div>
+			</c:when>
+			<c:when test="${state == 'ERROR'}">
+				<div>
+					<font id="SikertelenRegisztracioID"> Hiba tÃ¶rtÃ©nt a regisztrÃ¡ciÃ³ kÃ¶zben!</font>
+				</div>
+			</c:when>
+		</c:choose>
 	</div>
-	<%
-		} else if (state != null) {
-	%>
-	<div>
-		<font color="red" size="26"> Hiba történt a regisztráció
-			közben! </font>
-	</div>
-	<%
-		}
-	%>
 </body>
 </html>

@@ -22,43 +22,25 @@
 body {
 	background-color: green;
 }
-
-thead th {
-	text-align: center;
-}
-
-tfoot td {
-	text-align: center;
-}
-tbody td {
-	text-align: center;	
-}
-#userList {
-	text-align: center;
-}
-
 Table {
 	padding: 20px;
+	text-align: center;
 }
-
-
 </style>
 
 <script>
 	$(function() {
-		$("#userTable").DataTable();
+		$("#usersTable").DataTable();
 		$("#toIndex").button();
 	});
 </script>
 
 </head>
 <body>
-	<%@page import="java.util.ArrayList"%>
-	<%@page import="org.common.User"%>
-	<table border="2" id="userTable">
+	<table border="2" id="usersTable">
 		<thead>
 			<tr>
-				<th colspan="4" id="userList">Felhasználók listája</th>
+				<th colspan="4" id="usersList">Felhasználók listája</th>
 			</tr>
 			<tr>
 				<th>Felhasználónév
@@ -72,51 +54,28 @@ Table {
 				</td>
 			</tr>
 		</thead>
-		<%
-				if (session.getAttribute("userList") != null) {
-					ArrayList<User> itemsArray = (ArrayList<User>) session.getAttribute("userList");
-					for (int i = 0; i < itemsArray.size(); i++) {
-			%>
-			<tr>
-				<td>
-					<%
-						out.println(itemsArray.get(i).getName());
-					%>
-				</td>
-				<td>
-					<%
-						out.println(itemsArray.get(i).getEmail());
-					%>
-				</td>
-				<td>
-					<%
-						out.println(itemsArray.get(i).getPassword());
-					%>
-				</td>
-				<td>
-					<%
-						out.println(itemsArray.get(i).getDate());
-					%>
-				</td>
-			</tr>
-			<%
-				}
-				} else {
-					%>
+
+		<c:choose>
+			<c:when test="${userList != NULL}">
+				<c:forEach items="${userList}" var="item">
 					<tr>
-						<td colspan = 4>
-						<%
-							out.println("Nincs regisztalt felhasznalo!");
-						%>
-						</td>
-					
+						<td><c:out value="${item.getName()}"></c:out></td>
+						<td><c:out value="${item.getEmail()}"></c:out></td>
+						<td><c:out value="${item.getPassword()}"></c:out></td>
+						<td><c:out value="${item.getDate()}"></c:out></td>
 					</tr>
-			<%		
-				}
-			%>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan=4><c:out value="Nincs regisztalt felhasznalo!"></c:out>
+					</td>
+				</tr>
+			</c:otherwise>
+		</c:choose>
 		<tfoot>
 			<tr>
-				<td colspan="4" ><a href="index.jsp" id="toIndex">Vissza a
+				<td colspan="4"><a href="index.jsp" id="toIndex">Vissza a
 						regisztációhoz</a></td>
 			</tr>
 		</tfoot>
