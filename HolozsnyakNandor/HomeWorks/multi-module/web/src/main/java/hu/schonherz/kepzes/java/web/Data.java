@@ -1,3 +1,4 @@
+package hu.schonherz.kepzes.java.web;
 
 import java.util.ArrayList;
 

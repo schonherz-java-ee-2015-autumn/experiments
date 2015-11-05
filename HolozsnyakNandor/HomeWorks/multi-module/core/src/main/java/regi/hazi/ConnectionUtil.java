@@ -1,4 +1,4 @@
-package core;
+package regi.hazi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

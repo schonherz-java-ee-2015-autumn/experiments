@@ -1,22 +1,30 @@
+package hu.schonherz.kepzes.java.web;
+
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import hu.schonherz.kepzes.java.common.UserDTO;
+import hu.schonherz.kepzes.java.core.ServiceException;
+import hu.schonherz.kepzes.java.core.UserService;
+import hu.schonherz.kepzes.java.core.UserServiceImpl;
+
 /**
- * Servlet implementation class CheckUser
+ * Servlet implementation class RegistrationTest
  */
-@WebServlet("/CheckEmail")
-public class CheckEmail extends HttpServlet {
+@WebServlet("/RegistrationTest")
+public class RegistrationTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckEmail() {
+    public RegistrationTest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -25,28 +33,26 @@ public class CheckEmail extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
+		UserService service = new UserServiceImpl();
+		UserDTO user = new UserDTO("Nandi", "asd", "Lolka", "myemail@mail.com", "Bp", "1995/10/20");
+		
+		try {
+			service.saveUser(user);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String eMail = request.getParameter("eMail");
-		boolean foundUser = false;
-		for(RegisterData r : Data.users) {
-			if(r.geteMail().equals(eMail)) {
-				foundUser = true;
-				break;
-			}
-		}
-		
-		if(foundUser) {
-			response.getWriter().write("true");
-		} else {
-			response.getWriter().write("false");
-		}
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

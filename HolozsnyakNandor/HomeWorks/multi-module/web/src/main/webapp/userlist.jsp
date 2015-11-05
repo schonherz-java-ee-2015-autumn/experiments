@@ -26,9 +26,9 @@ $(function(){
 	     "columns" : [
 	             {"data":"userName"},
 	             {"data":"fullName"},
-	             {"data":"eMail"},
+	             {"data":"email"},
 	             {"data":"birthPlace"},
-	             {"data":"bornDate"},
+	             {"data":"birthDate"},
 	             ]
 	});
 	     $("#toIndex").button();

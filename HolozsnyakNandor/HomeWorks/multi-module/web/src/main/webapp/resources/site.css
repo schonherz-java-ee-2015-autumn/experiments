@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+body {
+	background: rgb(226, 226, 226);
+	font-family: cursive;
+}
+
+#regTable {
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 15px;
+	margin: auto;
+	width: 50%;
+}
+
+table {
+	margin: auto;
+}
+
+thead td {
+	text-align: center;
+}
+
+tfoot td {
+	margin: auto;
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+.warning {
+	color: red;
+	font-weight: bold;
+}
+
+label {
+	display: inline-block;
+	width: 10em;
+}
+
+.ui-tooltip {
+	width: 25%;
+}
+
+#dialog-confirm {
+	display: none;
+}
+
+#alreadyUser, #alreadyEmail {
+	display: none;
+	color: red;
+}
+.messageAfterReg {
+	margin:auto;
+	text-align: center;
+}
+</style>
