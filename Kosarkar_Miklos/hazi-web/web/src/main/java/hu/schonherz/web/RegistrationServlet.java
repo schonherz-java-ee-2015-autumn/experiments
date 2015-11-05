@@ -1,11 +1,7 @@
 package hu.schonherz.web;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hu.schonherz.common.UserManager;
 import hu.schonherz.common.User;
+import hu.schonherz.common.UserManager;
+import hu.schonherz.web.core.StrongEncryptor;
 import hu.schonherz.web.core.UserManagerImpl;
 import hu.schonherz.web.core.validation.DateValidator;
 import hu.schonherz.web.core.validation.EmailValidator;
@@ -101,21 +98,16 @@ public class RegistrationServlet extends HttpServlet {
 				new EmailValidator(email).validate()){
 			
 			if(dbUtil.findUserByName(userName)==null){
-				 dbUtil.saveUser(new User(userName, firstName, lastName, password, email, date));
+				StrongEncryptor encryption = new StrongEncryptor();
+				String encryptedPassword = encryption.encrypt(password);
+				 dbUtil.saveUser(new User(userName, firstName, lastName, encryptedPassword, email, date));
 				 request.setAttribute("state", "SUCCESS");
 			}else{
-				System.out.println("van már ilyen");
 				 request.setAttribute("state", "FAILURE");	
 			}
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 		}else{
-			System.out.println(" "+
-			Validator.isValidInput(userName) +
-			Validator.isValidInput(password) +
-			new DateValidator(birthDate).validate() +
-			new EmailValidator(email).validate());
-			
 			request.setAttribute("state", "FAILURE");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			return;
