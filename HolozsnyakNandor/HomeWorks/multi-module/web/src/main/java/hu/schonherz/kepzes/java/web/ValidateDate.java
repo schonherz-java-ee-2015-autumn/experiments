@@ -1,25 +1,26 @@
-
+package hu.schonherz.kepzes.java.web;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import common.RegistrationUtil;
-import core.RegistrationUtilImpl;
-
 /**
- * Servlet implementation class CheckUser
+ * Servlet implementation class ValidateDate
  */
-@WebServlet("/CheckUser")
-public class CheckUser extends HttpServlet {
+@WebServlet("/ValidateDate")
+public class ValidateDate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckUser() {
+    public ValidateDate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,6 +29,8 @@ public class CheckUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 	}
 
@@ -35,16 +38,23 @@ public class CheckUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = request.getParameter("userName");
-		RegistrationUtilImpl registrationU = new RegistrationUtilImpl();
-		boolean foundUser = registrationU.alreadyUser(userName);		
-		if(foundUser == true) {
+		// TODO Auto-generated method stub
+		//doGet(request, response);
+		String date = request.getParameter("date");
+		String dateFormat = request.getParameter("dateFormat");
+		
+		SimpleDateFormat dateF = new SimpleDateFormat(dateFormat);
+		dateF.setLenient(false);
+		try {
+			Date d = dateF.parse(date);
+			System.out.println(d);
 			response.getWriter().write("true");
-			System.out.println("Van már ilyen user!");
-		} else {
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
 			response.getWriter().write("false");
-			System.out.println("Nincs még ilyen user");
 		}
+		
 		
 	}
 

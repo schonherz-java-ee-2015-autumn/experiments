@@ -1,6 +1,8 @@
+package hu.schonherz.kepzes.java.web;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import common.User;
-import core.RegistrationUtilImpl;
+import hu.schonherz.kepzes.java.common.UserDTO;
+import hu.schonherz.kepzes.java.core.ServiceException;
+import hu.schonherz.kepzes.java.core.UserService;
+import hu.schonherz.kepzes.java.core.UserServiceImpl;
+import regi.hazi.RegistrationUtilImpl;
 
 /**
  * Servlet implementation class GetUsers
@@ -35,7 +40,7 @@ public class GetUsers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {			
 		RegistrationUtilImpl userListClass = new RegistrationUtilImpl();
-		
+		UserService userService = new UserServiceImpl();
 		 String Mennyit = request.getParameter("length");
 		 String Honnan = request.getParameter("start");
 		 String Keres = request.getParameter("search[value]");
@@ -45,10 +50,15 @@ public class GetUsers extends HttpServlet {
 		 System.out.println("Adatok beolvasása - from " + Integer.parseInt(Honnan) +
 		 " mennyit:" + Integer.parseInt(Mennyit) + " keresnivaló:" + Keres +  " rendezes: " + Rendezes + " rendezesmod:" + RendezesMod);
 		 
-		 ArrayList<User> userList = userListClass.getAllUsertoJSON(Integer.parseInt(Honnan), Integer.parseInt(Mennyit),Keres.isEmpty()?"":Keres,Rendezes,RendezesMod);
-		response.setCharacterEncoding("UTF-8");
-		Gson json = new Gson();
-		json.toJson(new Response(userList), response.getWriter());
+		List<UserDTO> userList;
+		try {
+			userList = userService.getUsers(Rendezes,RendezesMod);
+			response.setCharacterEncoding("UTF-8");
+			Gson json = new Gson();
+			json.toJson(new Response(userList,Integer.valueOf(Mennyit).intValue()), response.getWriter());
+		} catch (ServiceException e) {
+			System.out.println("Exception in GetUsers");
+		}		
 		
 }
 
@@ -63,49 +73,22 @@ public class GetUsers extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public static class Helper {
-		private String name;
-		private Date age;
-		
-		public Helper(String name, Date age) {
-			super();
-			this.name = name;
-			this.age = age;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public Date getAge() {
-			return age;
-		}
-
-		public void setAge(Date age) {
-			this.age = age;
-		}
-
-	}
 	public static class Response {
-		private ArrayList<User> data;
+		private List<UserDTO> data;
 		private int recordsTotal;
 		private int recordsFiltered;
-		public Response(ArrayList<User> data) {
+		public Response(List<UserDTO> userList, int countRows) {
 			super();
-			this.data = data;
-			recordsTotal = data.size();
-			recordsFiltered = data.size();
+			this.data = userList;
+			recordsTotal = userList.size();
+			recordsFiltered = countRows;
 		}
 		
-		public ArrayList<User> getData() {
+		public List<UserDTO> getData() {
 			return data;
 		}
 
-		public void setData(ArrayList<User> data) {
+		public void setData(ArrayList<UserDTO> data) {
 			this.data = data;
 		}
 		

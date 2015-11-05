@@ -1,6 +1,6 @@
-package common;
+package hu.schonherz.kepzes.java.web;
 
-public class User {
+public class RegisterData {
 	String userName;
 	String password;
 	String fullName;
@@ -8,8 +8,7 @@ public class User {
 	String birthPlace;
 	String bornDate;
 	
-	
-	public User(String userName, String password, String fullName, String eMail, String bornPlace,
+	public RegisterData(String userName, String password, String fullName, String eMail, String bornPlace,
 			String bornDate) {
 		super();
 		this.userName = userName;
@@ -41,7 +40,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		RegisterData other = (RegisterData) obj;
 		if (bornDate == null) {
 			if (other.bornDate != null)
 				return false;

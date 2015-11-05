@@ -1,4 +1,4 @@
-package core;
+package regi.hazi;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,13 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.RegistrationUtil;
-import common.User;
+import hu.schonherz.kepzes.java.common.UserDTO;
 
 public class RegistrationUtilImpl implements RegistrationUtil {
 
 	@Override
-	public void saveRegistration(User user) {
+	public void saveRegistration(UserDTO user) {
 
 		PreparedStatement insertUser = null;
 
@@ -65,17 +64,15 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 		String preparedQuery = "SELECT * from registration";
 		PreparedStatement prePared = null;
 		Connection conn = null;
-		ArrayList<User> userList = new ArrayList<User>();
+		ArrayList<UserDTO> userList = new ArrayList<UserDTO>();
 		
 		try {
-			System.out.println("Csatlakozás");
 			ConnectionUtil connection = new ConnectionUtil();
 			conn = connection.getConnection();
 			prePared = conn.prepareStatement(preparedQuery);                         
 			ResultSet rs = prePared.executeQuery(); 
-			System.out.println("Adatok RS-be olvasása.");
             while(rs.next()){ 
-            	User u = new User(
+            	UserDTO u = new UserDTO(
             			rs.getString("username").trim(),
             			rs.getString("password").trim(),
             			rs.getString("fullname").trim(),
@@ -88,7 +85,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
             	userList.add(u);
             }          
             
-            for(User u: userList) {
+            for(UserDTO u: userList) {
     			System.out.println(u.getUserName() + " " + u.getUserName() + "\n");
     		}
 			
@@ -114,7 +111,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			}
 		}
 	}
-	public ArrayList<User> getAllUsertoJSON(int start, int length, String search, String orderBy, String orderByMode) {
+	public ArrayList<UserDTO> getAllUsertoJSON(int start, int length, String search, String orderBy, String orderByMode) {
 		//System.out.println("Szelektálás kezdete");
 		String preparedQuery = "SELECT * from registration";
 		String searchString = "%";
@@ -139,7 +136,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 		preparedQuery += " LIMIT ?, ?";
 		
 		Connection conn = null;
-		ArrayList<User> userList = new ArrayList<User>();
+		ArrayList<UserDTO> userList = new ArrayList<UserDTO>();
 		
 		try {
 			//System.out.println("Csatlakozás");
@@ -156,7 +153,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			ResultSet rs = prePared.executeQuery(); 
 			//System.out.println("Adatok RS-be olvasása.");
             while(rs.next()){ 
-            	User u = new User(
+            	UserDTO u = new UserDTO(
             			rs.getString("username").trim(),
             			rs.getString("password").trim(),
             			rs.getString("fullname").trim(),
@@ -198,7 +195,7 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 	}
 
 	@Override
-	public User findUserByName() {
+	public UserDTO findUserByName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -219,7 +216,6 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 			ResultSet rs = prePared.executeQuery();
 			
 			if(rs.next() == true) {
-				System.out.println("alreadyUser: true");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -228,9 +224,34 @@ public class RegistrationUtilImpl implements RegistrationUtil {
 		}		
 		return already;
 	}
-
+	
+	public boolean alreadyEmail(String email) {
+		boolean already = false;
+		String preParedQuery = "SELECT email FROM registration WHERE email = ? ";
+		
+		PreparedStatement prePared = null;
+		
+		Connection conn = null;
+		
+		try {
+			ConnectionUtil connection = new ConnectionUtil();
+			conn = connection.getConnection();
+			prePared = conn.prepareStatement(preParedQuery);
+			prePared.setString(1, email);
+			ResultSet rs = prePared.executeQuery();
+			
+			if(rs.next() == true) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return already;
+	}
+	
 	@Override
-	public List<User> getAllUser() {
+	public List<UserDTO> getAllUser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
