@@ -31,6 +31,12 @@
 	</build>
 	<dependencyManagement>
 		<dependencies>
+		<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-webmvc</artifactId>
+	<version>4.2.2.RELEASE</version>
+</dependency>
+		
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>

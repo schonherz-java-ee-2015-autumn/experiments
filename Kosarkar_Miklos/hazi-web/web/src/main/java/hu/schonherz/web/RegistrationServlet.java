@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import hu.schonherz.common.User;
 import hu.schonherz.common.UserManager;
 import hu.schonherz.web.core.StrongEncryptor;
-import hu.schonherz.web.core.UserManagerImpl;
 import hu.schonherz.web.core.validation.DateValidator;
 import hu.schonherz.web.core.validation.EmailValidator;
 import hu.schonherz.web.core.validation.Validator;
@@ -26,16 +27,20 @@ import hu.schonherz.web.core.validation.Validator;
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 //    public static Map<String, User> users;
-	private UserManager dbUtil;
-
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	private UserManager userManager;
+	
+	@Autowired(required=true)
+	public void setUserManager(UserManager userManager){
+		this.userManager = userManager;
+	}
+	
     public RegistrationServlet() {
         super();
+        
 //        users = new HashMap<>();
-        dbUtil = new UserManagerImpl();
-  
+       // dbUtil = new UserManagerImpl();
+        
+        
     }
 
 	/**
@@ -97,10 +102,10 @@ public class RegistrationServlet extends HttpServlet {
 				new DateValidator(birthDate).validate() &&
 				new EmailValidator(email).validate()){
 			
-			if(dbUtil.findUserByName(userName)==null){
+			if(userManager.findUserByName(userName)==null){
 				StrongEncryptor encryption = new StrongEncryptor();
 				String encryptedPassword = encryption.encrypt(password);
-				 dbUtil.saveUser(new User(userName, firstName, lastName, encryptedPassword, email, date));
+				 userManager.saveUser(new User(userName, firstName, lastName, encryptedPassword, email, date));
 				 request.setAttribute("state", "SUCCESS");
 			}else{
 				 request.setAttribute("state", "FAILURE");	
