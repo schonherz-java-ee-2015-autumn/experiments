@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,13 +17,31 @@ import org.springframework.stereotype.Component;
 public class RegistrationImpl implements IRegistration {
 	
 	private DataSource dataSource;
-	private JdbcTemplate jdbcTemplate = new JdbcTemplate();
+	private JdbcTemplate jdbcTemplate;
 	
 	@Override
 	public List<UserDAO> getAllUser() {
 		System.out.println("RegistrationUtilImpl + getAllUsr");
 		String sql = "SELECT * from registration";
 		return jdbcTemplate.query(sql,new UserMapper());
+	}
+	
+	@Override
+	public void saveRegistration(UserDAO user) {
+		System.out.println("RegistrationUtilImpl + saveRegistration");
+		String sql = "INSERT INTO registration"
+		+ "(user_name," 
+		+ "passwords,"
+		+ "email,"
+		+ "Bdate)"
+		+ "VALUES(?,?,?,?);";
+		jdbcTemplate.update(sql, 
+				new Object[] {
+						user.getName(),
+						user.getPassword(),
+						user.getEmail(),
+						user.getDate()
+				});
 	}
 	
 	private static final class UserMapper implements RowMapper<UserDAO>{
@@ -39,39 +55,6 @@ public class RegistrationImpl implements IRegistration {
 			user.setDate(resultSet.getString("Bdate"));
 			return user;
 		}
-	}
-	
-	@Override
-	public void saveRegistration(UserDAO user) {
-		System.out.println("RegistrationUtilImpl + saveRegistration");
-		Connection conn = null;
-		PreparedStatement insertUser = null;
-		String insertUserString = "INSERT INTO registration"
-		+ "(user_name," 
-		+ "passwords,"
-		+ "email,"
-		+ "Bdate)"
-		+ "VALUES(?,?,?,?);";
-	
-		try {
-			conn = dataSource.getConnection();
-			insertUser = conn.prepareStatement(insertUserString);
-			insertUser.setString(1, user.getName());
-			insertUser.setString(2, user.getPassword());
-			insertUser.setString(3, user.getEmail());
-			insertUser.setString(4, user.getDate());
-			insertUser.execute();
-
-		} catch (SQLException e) {
-				e.printStackTrace();
-		} finally {
-				try {
-					insertUser.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 	}
 
 	public List<UserDAO> getUserLimit(String startLimit, String endLimit) {
