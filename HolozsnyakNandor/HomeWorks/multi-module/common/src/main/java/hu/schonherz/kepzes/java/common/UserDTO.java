@@ -1,31 +1,41 @@
-package hu.schonherz.kepzes.java.web;
+package hu.schonherz.kepzes.java.common;
 
-public class RegisterData {
-	String userName;
-	String password;
-	String fullName;
-	String eMail;
-	String birthPlace;
-	String bornDate;
-	
-	public RegisterData(String userName, String password, String fullName, String eMail, String bornPlace,
+public class UserDTO {
+	private String userName;
+	private String password;
+	private String fullName;
+	private String email;
+	private String birthPlace;
+	private String birthDate;
+
+	public UserDTO(String userName, String password, String fullName, String eMail, String bornPlace,
 			String bornDate) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.fullName = fullName;
-		this.eMail = eMail;
+		this.email = eMail;
 		this.birthPlace = bornPlace;
-		this.bornDate = bornDate;
+		this.birthDate = bornDate;
+	}
+
+	public UserDTO() {
+		
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [userName=" + userName + ", password=" + password + ", fullName=" + fullName + ", email="
+				+ email + ", birthPlace=" + birthPlace + ", birthDate=" + birthDate + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bornDate == null) ? 0 : bornDate.hashCode());
+		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
 		result = prime * result + ((birthPlace == null) ? 0 : birthPlace.hashCode());
-		result = prime * result + ((eMail == null) ? 0 : eMail.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
@@ -40,21 +50,21 @@ public class RegisterData {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RegisterData other = (RegisterData) obj;
-		if (bornDate == null) {
-			if (other.bornDate != null)
+		UserDTO other = (UserDTO) obj;
+		if (birthDate == null) {
+			if (other.birthDate != null)
 				return false;
-		} else if (!bornDate.equals(other.bornDate))
+		} else if (!birthDate.equals(other.birthDate))
 			return false;
 		if (birthPlace == null) {
 			if (other.birthPlace != null)
 				return false;
 		} else if (!birthPlace.equals(other.birthPlace))
 			return false;
-		if (eMail == null) {
-			if (other.eMail != null)
+		if (email == null) {
+			if (other.email != null)
 				return false;
-		} else if (!eMail.equals(other.eMail))
+		} else if (!email.equals(other.email))
 			return false;
 		if (fullName == null) {
 			if (other.fullName != null)
@@ -99,27 +109,26 @@ public class RegisterData {
 	}
 
 	public String geteMail() {
-		return eMail;
+		return email;
 	}
 
 	public void seteMail(String eMail) {
-		this.eMail = eMail;
+		this.email = eMail;
 	}
-
-	public String getBornPlace() {
+	
+	public String getBirthPlace() {
 		return birthPlace;
 	}
 
-	public void setBornPlace(String bornPlace) {
-		this.birthPlace = bornPlace;
+	public void setBirthPlace(String birthPlace) {
+		this.birthPlace = birthPlace;
 	}
 
-	public String getBornDate() {
-		return bornDate;
+	public String getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBornDate(String bornDate) {
-		this.bornDate = bornDate;
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
-
 }
