@@ -27,16 +27,17 @@ public class RegistrationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name,password, email, date;
-		RegistrationUtilImpl regUtil = new RegistrationUtilImpl();
+		RegistrationImpl regUtil = new RegistrationImpl();
 		name = request.getParameter("user");
 		password = request.getParameter("password");
 		email = request.getParameter("email");
 		date = request.getParameter("date");
 		try{
-			regUtil.saveRegistration(new User(name, password, email, date));
+			regUtil.saveRegistration(new UserDAO(name, password, email, date));
 			request.setAttribute("state", "OK");
 		}catch(Exception e) {
 			request.setAttribute("state", "ERROR");
+			System.out.println("NO " + e.getMessage());
 		}
 		String nextPage = "/index.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);

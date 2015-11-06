@@ -1,0 +1,15 @@
+.warning {
+	color: red;
+	font-weight: bold;
+	border: 34;
+}
+#SikertelenRegisztracioID {
+	color : red ;
+	font-weight: bold;
+	font-size: 26px;
+}
+#SikeresRegisztracioID {
+	color : green ;
+	font-weight: bold;
+	font-size: 26px;
+}

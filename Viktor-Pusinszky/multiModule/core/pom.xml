@@ -8,7 +8,7 @@
 		<artifactId>multi-modul</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<artifactId>core</artifactId>
 	<name>core</name>
 
@@ -27,6 +27,11 @@
 			<groupId>hu.schonherz</groupId>
 			<artifactId>common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.2.2.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>

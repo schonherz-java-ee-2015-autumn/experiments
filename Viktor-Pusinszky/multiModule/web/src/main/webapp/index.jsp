@@ -4,66 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css">
+<link rel="stylesheet" href="resources/index.css"/>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<style>
-.warning {
-	color: red;
-	font-weight: bold;
-	border: 34;
-}
-#SikertelenRegisztracioID {
-	color : red ;
-	font-weight: bold;
-	font-size: 26px;
-}
-#SikeresRegisztracioID {
-	color : green ;
-	font-weight: bold;
-	font-size: 26px;
-}
-</style>
-
-<script>
-	$(function() {
-
-		$("#date").datepicker();
-		$("#sendform").button();
-		$("#sendformreglist").button();
-		$("#registrationwform").submit(
-				function(event) {
-					if (!$("#user").val()) {
-						$("#userL").addClass("warning");
-						event.preventDefault();
-					} else {
-						$('#userL').removeClass('warning');
-					}
-					if (!$("#password").val()
-							|| $("#password").val() != $("#password2").val()) {
-						$("#passwordL").addClass("warning");
-						$("#password2L").addClass("warning");
-						event.preventDefault();
-					} else {
-						$('#passwordL').removeClass('warning');
-						$('#password2L').removeClass('warning');
-					}
-					if (!$("#email").val()) {
-						$("#emailL").addClass("warning");
-						event.preventDefault();
-					} else {
-						$('#emailL').removeClass('warning');
-					}
-					if (!$("#date").val()) {
-						$("#dateL").addClass("warning");
-						event.preventDefault();
-					} else {
-						$('#dateL').removeClass('warning');
-					}
-				});
-	});
-</script>
+<script src="resources/index.js"></script>
 
 <title>Registration</title>
 </head>
@@ -115,9 +60,9 @@
 				<div>
 					<font id="SikeresRegisztracioID">Sikeres regisztráció!</font>
 					<script>
-// 						setTimeout(function() {
-// 							document.location.href = "userList.jsp"
-// 						}, 1000);
+						setTimeout(function() {
+ 							document.location.href = "userList.jsp"
+ 						}, 1000);
 					</script>
 				</div>
 			</c:when>
