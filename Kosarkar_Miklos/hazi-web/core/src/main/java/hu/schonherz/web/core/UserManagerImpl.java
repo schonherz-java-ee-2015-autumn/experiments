@@ -9,16 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jasypt.util.password.StrongPasswordEncryptor;
-
-import hu.schonherz.common.UserManager;
 import hu.schonherz.common.User;
+import hu.schonherz.common.UserManager;
 
 public class UserManagerImpl implements UserManager {
 
 	@Override
 	public void saveUser(User user) {
-		StrongPasswordEncryptor pe = new StrongPasswordEncryptor();
 		PreparedStatement insertUser = null;
 
 		String insertUserQuery = "INSERT INTO web_app.users" + "(username,first_name, last_name, pwd, email, birthdate)"
@@ -32,7 +29,7 @@ public class UserManagerImpl implements UserManager {
 			insertUser.setString(1, user.getUsername());
 			insertUser.setString(2, user.getFirstName());
 			insertUser.setString(3, user.getLastName());
-			insertUser.setString(4, pe.encryptPassword(user.getPass()));
+			insertUser.setString(4, user.getPass());
 			insertUser.setString(5, user.getEmail());
 			insertUser.setDate(6, new java.sql.Date(user.getDateOfBirth().getTime()));
 			insertUser.execute();
