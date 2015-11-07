@@ -22,16 +22,21 @@ public class SQLStatementFactory {
 	};
 
 	public static String getAllUsersStatement(RefreshParams params) {
+		StringBuffer buffer = new StringBuffer();
 
 		String searcField = StringUtils.isNotBlank(params.getSearchExpression())
-				? " WHERE name LIKE '%" + params.getSearchExpression() + "%' OR "
-						+ "username LIKE '%" + params.getSearchExpression() + "%' OR " + "email LIKE '%"
-						+ params.getSearchExpression() + "%' OR " + "phonenumber LIKE '%" + params.getSearchExpression() + "%'"
+				? " WHERE name LIKE '%[replacewithparam]%' OR username LIKE '%[replacewithparam]%' OR email LIKE '%[replacewithparam]%' OR phonenumber LIKE '%[replacewithparam]%'"
+						.replaceAll("[replacewithparam]", params.getSearchExpression())
 				: "";
 
-		return "SELECT CONCAT_WS(' ',title,firstname,lastname) as name, city,email,phonenumber,dateofbirth,username FROM users"
-				+ searcField + " ORDER BY " + params.getOrderBy() + " " + params.getOrderType() + " LIMIT "
-				+ params.getStart() + "," + Integer.toString(params.getStart() + params.getLength()) + ";";
+		buffer.append(
+				"SELECT CONCAT_WS(' ',title,firstname,lastname) as name, city,email,phonenumber,dateofbirth,username FROM users ");
+		buffer.append(searcField);
+		buffer.append(" ORDER BY ");
+		buffer.append(params.getOrderBy() + " " + params.getOrderType());
+		buffer.append(" LIMIT ?,?;");
+
+		return buffer.toString();
 	}
 
 	public static String updateUserStatement() {
