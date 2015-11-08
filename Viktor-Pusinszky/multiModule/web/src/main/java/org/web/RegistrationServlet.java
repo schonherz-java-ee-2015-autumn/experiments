@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.common.*;
 import org.core.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Servlet implementation class RedirectWithAttribute
  */
@@ -27,16 +29,20 @@ public class RegistrationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name,password, email, date;
-		RegistrationUtilImpl regUtil = new RegistrationUtilImpl();
+		ApplicationContext ctx =
+				new ClassPathXmlApplicationContext("spring.xml");
+		RegistrationImpl dao = ctx.getBean("registrationImpl", RegistrationImpl.class);
+		
 		name = request.getParameter("user");
 		password = request.getParameter("password");
 		email = request.getParameter("email");
 		date = request.getParameter("date");
 		try{
-			regUtil.saveRegistration(new User(name, password, email, date));
+			dao.saveRegistration(new UserDAO(name, password, email, date));
 			request.setAttribute("state", "OK");
 		}catch(Exception e) {
 			request.setAttribute("state", "ERROR");
+			System.out.println("NOs " + e.getMessage());
 		}
 		String nextPage = "/index.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);

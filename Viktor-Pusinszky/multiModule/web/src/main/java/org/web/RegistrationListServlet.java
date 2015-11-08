@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
-import org.core.RegistrationUtilImpl;
+import org.core.RegistrationImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Servlet implementation class RegistrationListServlet
@@ -30,8 +32,10 @@ public class RegistrationListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RegistrationUtilImpl regUtil = new RegistrationUtilImpl();
-		request.getSession().setAttribute("userList", regUtil.getAllUser());
+		ApplicationContext ctx =
+				new ClassPathXmlApplicationContext("spring.xml");
+		RegistrationImpl dao = ctx.getBean("registrationImpl", RegistrationImpl.class);
+		request.getSession().setAttribute("userList", dao.getAllUser());
 		response.sendRedirect("userList.jsp");
 	}
 
@@ -39,14 +43,6 @@ public class RegistrationListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		RegistrationUtilImpl regUtil = new RegistrationUtilImpl();
-//		 String Mennyit = request.getParameter("length");
-//		 String Honnan = request.getParameter("start");
-//		 System.out.println(Mennyit + " : " + Honnan +" MENNYIT HONNAN " );
-//		request.getSession().setAttribute("userList", regUtil.getUserLimit(Honnan,Mennyit));
-//		String nextPage = "/userList.jsp";
-//		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
-//		rd.forward(request, response);
 	}
 
 }
