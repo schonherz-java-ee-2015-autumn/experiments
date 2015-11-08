@@ -9,20 +9,31 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:property-placeholder location="classpath:/jdbc.properties" />
-
+	<context:annotation-config />
+	<context:component-scan base-package="hu.schonherz.*" />
+	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="${jdbc.driver}" 
-		p:url="${jdbc.url}"
-		p:username="${jdbc.username}"
+		p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}" p:username="${jdbc.username}"
 		p:password="${jdbc.password}" />
 
 
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
-	
-	<bean id="userManagerWithDAO" class="hu.schonherz.web.core.UserManagerWithDAO"/>
+
+	<bean id="userManagerWithDAO" class="hu.schonherz.web.core.UserManagerWithDAO">
+		<constructor-arg ref="UserDAO" />
+	</bean>
+	<bean id="Authentication" class="hu.schonherz.web.core.authentication.Authentication">
+		<constructor-arg ref="userManagerWithDAO" />
+	</bean>
+	<bean id="UserDAO" class="hu.schonherz.web.core.UserDAOImpl">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
+
+
+
 
 
 </beans>

@@ -26,11 +26,20 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByUsername(String username) {
-		User user = jdbcTemplate
+		User user = null;
+		try{
+		 user = jdbcTemplate
 				.queryForObject("select * from web_app.users where username=?", new Object[] { username },
 						(rs, rn) -> new User(rs.getString("username"), rs.getString("first_name"),
 								rs.getString("last_name"), rs.getString("pwd"), rs.getString("email"),
 								rs.getDate("birthdate")));
+		}catch(Exception e){
+			if(user==null)
+				return null;
+			else{
+				return user;
+			}
+		}
 		return user;
 	}
 

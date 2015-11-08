@@ -2,6 +2,8 @@ package hu.schonherz.web.core;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import hu.schonherz.common.User;
 import hu.schonherz.common.UserDAO;
 import hu.schonherz.common.UserManager;
@@ -9,6 +11,7 @@ import hu.schonherz.common.UserManager;
 public class UserManagerWithDAO implements UserManager{
 	private UserDAO userDAO;
 	
+	@Autowired
 	public UserManagerWithDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
