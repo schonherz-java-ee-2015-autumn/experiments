@@ -2,17 +2,16 @@ package org.web;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
-import org.core.RegistrationImpl;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.common.IRegistration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  * Servlet implementation class RegistrationListServlet
@@ -20,9 +19,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @WebServlet("/RegistrationListServlet")
 public class RegistrationListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
+	@Autowired
+	private IRegistration dao;
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
     public RegistrationListServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -32,9 +37,7 @@ public class RegistrationListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ApplicationContext ctx =
-				new ClassPathXmlApplicationContext("spring.xml");
-		RegistrationImpl dao = ctx.getBean("registrationImpl", RegistrationImpl.class);
+		
 		request.getSession().setAttribute("userList", dao.getAllUser());
 		response.sendRedirect("userList.jsp");
 	}
