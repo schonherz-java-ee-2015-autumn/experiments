@@ -11,8 +11,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<context:property-placeholder location="classpath:/spring-part2-jdbc.properties"/>
-	
+<!-- 	Component scan, az annotációk engedélyezése miatt -->
 	<context:component-scan base-package="hu.schonherz.kepzes.java.core"></context:component-scan>
+	<context:annotation-config/>
+	<context:spring-configured/>
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		p:driverClassName="${jdbc.driver}"
@@ -22,7 +24,11 @@
 		
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource" />
 	<tx:annotation-driven transaction-manager="txManager" />
-	<bean id="userDao" class="hu.schonherz.kepzes.java.core.UserDAOImpl" p:dataSource-ref="dataSource" init-method="init"/>
+	
+	<bean id="userDao" class="hu.schonherz.kepzes.java.core.dao.UserDAOImpl" p:dataSource-ref="dataSource" init-method="init"/>
+	<bean id="checkerDao" class="hu.schonherz.kepzes.java.core.dao.CheckerDAOImpl" p:dataSource-ref="dataSource" init-method="init"/>
 	<bean id="userService" class="hu.schonherz.kepzes.java.core.UserServiceImpl" p:userDao-ref="userDao"/>
-
+	<bean id="passwordEncryptor" class="hu.schonherz.kepzes.java.core.tools.Encryptor"/>
+	<bean id="strongPassword" class="org.jasypt.util.password.StrongPasswordEncryptor"/>
+	
 </beans>

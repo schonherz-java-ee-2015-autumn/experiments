@@ -3,38 +3,42 @@ package hu.schonherz.kepzes.java.core;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import hu.schonherz.kepzes.java.common.CheckerDAO;
 import hu.schonherz.kepzes.java.common.UserDAO;
 import hu.schonherz.kepzes.java.common.UserDTO;
 import hu.schonherz.kepzes.java.common.UserException;
+import hu.schonherz.kepzes.java.common.UserVO;
+import hu.schonherz.kepzes.java.core.tools.Encryptor;
+import hu.schonherz.kepzes.java.core.tools.Tools;
 
-@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true, rollbackFor = ServiceException.class, propagation = Propagation.REQUIRED)
 @Component
+@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true, rollbackFor = ServiceException.class, propagation = Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
-
+	@Autowired(required = true)
 	private UserDAO userDao;
-	private Tools tools = new Tools();
-	
 	@Autowired
-	public void setUserDao(UserDAO userDao) {
-		this.userDao = userDao;
-	}
+	private CheckerDAO checkerDao;
+	@Autowired
+	private Encryptor passwordEncryptor;
 
 	public UserDAO getUserDao() {
 		return userDao;
 	}
 
+	public void setUserDao(UserDAO userDao) {
+		this.userDao = userDao;
+	}
+
+	private Tools tools = new Tools();
+
 	@Override
 	@Transactional(readOnly = false)
 	public void saveUser(UserDTO user) throws ServiceException {
-
-		// userDao = (UserDAO) context.getBean("userDao");
 		try {
 			userDao.saveUser(user);
 		} catch (UserException e) {
@@ -57,10 +61,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDTO> getUsers(String orderBy, String orderByMode) throws ServiceException {
-		ApplicationContext context = new ClassPathXmlApplicationContext("/datasource-with-transaction.xml",
-				UserDAOImpl.class);
-		// userDao = (UserDAO) context.getBean("userDao");
-
 		String ordBy = tools.determinateOrderBy(orderByMode);
 		System.out.println(ordBy);
 		try {
@@ -74,6 +74,37 @@ public class UserServiceImpl implements UserService {
 	public UserDTO getUserById(long id) throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean checkUserByUserName(String userName) throws ServiceException {
+		return checkerDao.checkUserByUsername(userName);
+	}
+
+	@Override
+	public boolean checkUserByEmail(String eMail) throws ServiceException {
+		return checkerDao.checkUserByEmail(eMail);
+	}
+
+	public String encryptPassword(String password) {
+		return passwordEncryptor.encryptPassword(password);
+	}
+
+	public UserDTO loginUser(String username, String password) {
+		//String enCryptedPassword = passwordEncryptor.encryptPassword(password);
+		//System.out.println("enCryptedPassword:" + enCryptedPassword);
+		UserVO user = new UserVO(username, password);
+		UserDTO requestedUser;
+		try {
+			requestedUser = userDao.signInUser(user);
+			if (requestedUser != null) {
+				return requestedUser;
+			} else {
+				return null;
+			}
+		} catch (UserException e) {
+			return null;
+		}
 	}
 
 }

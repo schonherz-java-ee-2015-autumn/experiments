@@ -1,0 +1,7 @@
+Schönherz Java EE Őszi képzés házi feladatok listája.
+1. Maven-es multi modul készítése.
+2. Webapp Készítése Servlettel - Regisztrációs felület előbb Listába aztán Adatbázisba
+3. Regisztrációs felület kibővítése Data Tables-el
+4. Regisztrációs felület Spring-el
+5. Regisztráció Spring Security-vel - jogok
+6. Regisztráció JPA-val
