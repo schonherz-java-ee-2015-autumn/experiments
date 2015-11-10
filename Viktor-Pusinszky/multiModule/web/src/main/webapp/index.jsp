@@ -19,7 +19,7 @@
 				<thead>
 					<tr>
 						<td colspan="2" align="center">
-							<h2>Regisztáció</h2>
+							<h2>Regisztráció</h2>
 						</td>
 					</tr>
 				</thead>

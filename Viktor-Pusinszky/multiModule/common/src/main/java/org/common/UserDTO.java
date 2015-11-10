@@ -1,20 +1,20 @@
 package org.common;
 
-public class UserDAO {
+public class UserDTO {
 	
 	private String name;
 	private String password;
 	private String email;
 	private String date;
 	
-	public UserDAO(String name, String password, String email, String date) {
+	public UserDTO(String name, String password, String email, String date) {
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.date = date;
 	}
 
-	public UserDAO() {
+	public UserDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
