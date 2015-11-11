@@ -11,7 +11,8 @@ public class UserDTO {
 	private String birthDate;
 	private Integer roleid;
 	private List<RoleVO> roles;
-	
+	private Integer userId;
+
 	public UserDTO(String userName, String password, String fullName, String email, String birthPlace, String birthDate,
 			Integer roleid) {
 		super();
@@ -31,7 +32,8 @@ public class UserDTO {
 	@Override
 	public String toString() {
 		return "UserDTO [userName=" + userName + ", password=" + password + ", fullName=" + fullName + ", email="
-				+ email + ", birthPlace=" + birthPlace + ", birthDate=" + birthDate + "]";
+				+ email + ", birthPlace=" + birthPlace + ", birthDate=" + birthDate + ", roleid=" + roleid + ", roles="
+				+ roles + ", userId=" + userId + "]";
 	}
 
 	@Override
@@ -143,5 +145,13 @@ public class UserDTO {
 
 	public void setRoleid(Integer roleid) {
 		this.roleid = roleid;
+	}
+	
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

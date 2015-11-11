@@ -6,27 +6,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/site.css" />
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="resources/site.js"></script>
+<script type="text/javascript" src="resources/userInformation.js"></script>
+<style>
+#userId {
+	display: none;
+}
+</style>
 <script>
 $(function(){
-	$.ajax({ 
-	    type: 'POST', 
-	    url: '/Login', 
-	    dataType: 'json',
-	    data:data
+	var id = $('#userId').val();
+	$.post('GetUserInformation', {
+		"userId" : id
+	}, function(response) { // on success
+		var obj = jQuery.parseJSON(response);
+		$("#user").val(obj.data.userName);
+		$("#fulln").val(obj.data.fullName);
+		$("#e-mail").val(obj.data.email);
+		$("#birthplace").val(obj.data.birthPlace);
+		$("#dateId").val(obj.data.birthDate);
+	}).fail(function() { //on failure
 	});
 });
 </script>
 </head>
 <body>
+<%	String state = (String) session.getAttribute("userId"); %>
 	<div id="regTable">
-		<form method="post" action="Logout">
+		<form method="post" action="ModUser">
 			<table>
 				<thead>
 					<tr>
 						<td colspan="2"><h3>Felhasználó adatai</h3></td>
+						<td><input type="hidden" id="userId" name="userId"
+							value="<%=state%>"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,17 +50,6 @@ $(function(){
 						<td><label for="user" id="userL">Felhasználónév:</label></td>
 						<td><input placeholder="Felhasználónév" type="text" id="user"
 							name="Username" title="Kérlek add meg a felhasználóneved"></td>
-					</tr>
-					<tr>
-						<td><label for="passw" id="passwL">Jelszó:</label></td>
-						<td><input placeholder="Jelszó" type="password" id="passw"
-							name="Password" title="Kérlek add meg a jelszavad"></td>
-					</tr>
-					<tr>
-						<td><label for="passwre" id="passwreL">Jelszó újra:</label></td>
-						<td><input placeholder="Jelszó újra" type="password"
-							id="passwre" name="Passwordre"
-							title="Kérlek add meg a jelszavad újra"></td>
 					</tr>
 					<tr>
 						<td><label for="fulln" id="fullnL">Teljes név:</label></td>
@@ -72,7 +77,7 @@ $(function(){
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="1"><input type="submit" value="Küldés!"></td>
+						<td colspan="2"><input type="submit" value="Módosítás!"></td>
 					</tr>
 				</tfoot>
 			</table>

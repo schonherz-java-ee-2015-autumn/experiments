@@ -10,5 +10,6 @@ public interface UserDAO {
 	List<UserDTO> getUsers(String orderBy, String orderByMode) throws UserException;
 	UserDTO getUserById(long id) throws UserException;
 	UserDTO signInUser(UserVO user) throws UserException;
+	UserDTO getUserByName(String username) throws UserException;
 	
 }

@@ -7,7 +7,7 @@
 	href="http://code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<!-- <script type="text/javascript" src="resources/site.js"></script> -->
+<script type="text/javascript" src="resources/site.js"></script>
 <title>Föoldal</title>
 </head>
 <body>
@@ -42,10 +42,8 @@
 					</tfoot>
 				</table>
 			</form>
-
 			<%
 				String state = (String) session.getAttribute("state");
-				System.out.println("STATE:" + state);
 				if (state != null && state.equals("LOGGEDIN")) {
 			%>
 			<div class="messageAfterReg">
