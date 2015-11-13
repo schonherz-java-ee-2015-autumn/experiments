@@ -5,11 +5,15 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +27,7 @@ import hu.schonherz.kepzes.java.common.UserVO;
 public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 
 	private SimpleJdbcInsert insert;
-
-	public UserDAOImpl() {
-
-	}
 	
-	@SuppressWarnings("resource")
-	public void init() {
-		insert = new SimpleJdbcInsert(getDataSource()).withTableName("registration");
-	}
-
 	@Override
 	@Transactional(readOnly = false)
 	public void saveUser(UserDTO user) throws UserException {
