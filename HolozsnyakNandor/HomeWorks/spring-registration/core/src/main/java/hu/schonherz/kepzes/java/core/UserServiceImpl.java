@@ -48,14 +48,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void updateUser(UserDTO user) throws ServiceException {
-		// TODO Auto-generated method stub
+		try {
+			userDao.updateUser(user);
+		} catch (UserException e) {
+			throw new ServiceException(e);
+		}
 
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteUser(UserDTO user) throws ServiceException {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -72,10 +77,27 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO getUserById(long id) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		UserDTO user;
+		try{
+			user = userDao.getUserById(id);
+		}
+		catch(UserException e) {
+			throw new ServiceException(e);
+		}
+		return user;
 	}
-
+	@Override
+	public UserDTO getUserByName(String username) throws ServiceException {
+		UserDTO user;
+		try{
+			user = userDao.getUserByName(username);
+		}
+		catch(UserException e) {
+			throw new ServiceException(e);
+		}
+		return user;
+		
+	}
 	@Override
 	public boolean checkUserByUserName(String userName) throws ServiceException {
 		return checkerDao.checkUserByUsername(userName);

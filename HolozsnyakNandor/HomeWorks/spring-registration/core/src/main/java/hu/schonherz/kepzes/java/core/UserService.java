@@ -15,4 +15,5 @@ public interface UserService {
 	boolean checkUserByEmail(String eMail) throws ServiceException;
 	String encryptPassword(String password) throws ServiceException;
 	UserDTO loginUser(String username, String password) throws ServiceException;
+	UserDTO getUserByName(String username) throws ServiceException;
 }

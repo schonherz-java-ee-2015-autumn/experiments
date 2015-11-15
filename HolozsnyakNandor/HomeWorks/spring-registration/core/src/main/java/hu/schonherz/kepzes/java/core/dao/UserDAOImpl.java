@@ -2,6 +2,7 @@ package hu.schonherz.kepzes.java.core.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -26,7 +27,7 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 	public UserDAOImpl() {
 
 	}
-
+	
 	@SuppressWarnings("resource")
 	public void init() {
 		insert = new SimpleJdbcInsert(getDataSource()).withTableName("registration");
@@ -43,11 +44,37 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void updateUser(UserDTO user) throws UserException {
-
+		//System.out.println("Modding user in dao: " + user.toString());
+		String updateQuery = "update registration set user_name = ?, email=?,full_name=?,birth_date=?,birth_place=? where id = ?";
+		Object[] params = {
+					user.getUserName(),
+					user.geteMail(),
+					user.getFullName(),
+					user.getBirthDate(),
+					user.getBirthPlace(),
+					user.getUserId()
+					};
+	     int[] types = {
+	    		 Types.VARCHAR,
+	    		 Types.VARCHAR,
+	    		 Types.VARCHAR,
+	    		 Types.VARCHAR,
+	    		 Types.VARCHAR,
+	    		 Types.INTEGER};
+		try {
+			int i = getJdbcTemplate().update(updateQuery, params,types);
+			//System.out.println("Rows affected:" + i);
+		} catch(DataAccessException e) {
+			System.out.println("Can not mod user in DAO!");
+			e.printStackTrace();
+			throw new UserException(e);
+		}
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteUser(UserDTO user) throws UserException {
 		String query = "delete from registration where user_name = ?";
 		try {
@@ -80,8 +107,30 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 
 	@Override
 	public UserDTO getUserById(long id) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Getting user by Id");
+		String sql = "SELECT id,user_name,email,full_name,birth_date,birth_place from registration where id = ?";
+		List<UserDTO> queriedUser = getJdbcTemplate().query(sql, new Object[] { id }, new RowMapper<UserDTO>() {
+
+			@Override
+			public UserDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				UserDTO qUser = new UserDTO();
+				qUser.setUserId(rs.getInt(1));
+				qUser.setUserName(rs.getString(2));
+				qUser.seteMail(rs.getString(3));
+				qUser.setFullName(rs.getString(4));
+				qUser.setBirthDate(rs.getString(5));
+				qUser.setBirthPlace(rs.getString(6));
+				System.out.println(qUser.toString());
+				return qUser;
+			}
+		});
+		
+		if (!queriedUser.isEmpty()) {
+			System.out.println(queriedUser.get(0).toString());
+			return queriedUser.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -93,6 +142,7 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 					@Override
 					public UserDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 						UserDTO qUser = new UserDTO();
+						qUser.setUserId(rs.getInt(1));
 						qUser.setUserName(rs.getString(2));
 						qUser.seteMail(rs.getString(4));
 						qUser.setFullName(rs.getString(5));
@@ -103,6 +153,31 @@ public class UserDAOImpl extends JdbcDaoSupport implements UserDAO {
 					}
 				});
 		if (!queriedUser.isEmpty()) {
+			return queriedUser.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public UserDTO getUserByName(String username) throws UserException {
+
+		String sql = "SELECT id,user_name,email,full_name,birth_date,birth_place from registration where user_name = ?";
+		List<UserDTO> queriedUser = getJdbcTemplate().query(sql, new Object[] { username }, new RowMapper<UserDTO>() {
+
+			@Override
+			public UserDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				UserDTO qUser = new UserDTO();
+				qUser.setUserId(rs.getInt(1));
+				qUser.setUserName(rs.getString(2));
+				qUser.seteMail(rs.getString(3));
+				qUser.setFullName(rs.getString(4));
+				qUser.setBirthDate(rs.getString(5));
+				qUser.setBirthPlace(rs.getString(6));
+				return qUser;
+			}
+		});
+		if (!queriedUser.isEmpty()) {
+			System.out.println(queriedUser.get(0).toString());
 			return queriedUser.get(0);
 		} else {
 			return null;

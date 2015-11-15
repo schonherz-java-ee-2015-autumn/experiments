@@ -68,18 +68,18 @@ public class Login extends HttpServlet {
 			if(user!= null) {
 				session.setAttribute("state", "LOGGEDIN");
 				session.setAttribute("id", request.getSession().getId());
-				Gson json = new Gson();
-				json.toJson(new Response(user), response.getWriter());
-				nextPage = "/userinformation.jsp";
+				session.setAttribute("userId",user.getUserId().toString());
+				nextPage = "showuser.jsp";
 			} else {
 				session.setAttribute("state", "NOTLOGGEDIN");
-				nextPage = "/index.jsp";
+				nextPage = "index.jsp";
 			}
 		} catch (ServiceException e) {
 			session.setAttribute("state", "ERROR");
 		}finally {
-			RequestDispatcher rd = request.getRequestDispatcher(nextPage);
-			rd.forward(request, response);
+			//RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+			//rd.include(request, response);
+			response.sendRedirect(nextPage);
 		}
 	}
 	
