@@ -1,0 +1,75 @@
+body {
+	font-family: 'roboto', sans-serif;
+}
+
+table {
+	margin: auto;
+}
+
+thead {
+	font-family: 'roboto', sans-serif;
+	-webkit-transition: -webkit-transform 0.2s
+		cubic-bezier(0.64, 0.09, 0.08, 1), box-shadow 0.2s
+		cubic-bezier(0.64, 0.09, 0.08, 1);
+	transition: transform 0.2s cubic-bezier(0.64, 0.09, 0.08, 1), box-shadow
+		0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+	border: none;
+	background: #03A9F4;
+	cursor: pointer;
+	border-radius: 3px;
+	padding: 6px;
+	width: 100%;
+	color: white;
+	margin: 25px auto 0px;
+	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+thead th {
+	text-align: left;
+}
+
+tfoot td {
+	margin: auto;
+	text-align: center;
+}
+
+button {
+	font-family: 'roboto', sans-serif;
+	-webkit-transition: -webkit-transform 0.2s
+		cubic-bezier(0.64, 0.09, 0.08, 1), box-shadow 0.2s
+		cubic-bezier(0.64, 0.09, 0.08, 1);
+	transition: transform 0.2s cubic-bezier(0.64, 0.09, 0.08, 1), box-shadow
+		0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+	border: none;
+	background: #03A9F4;
+	cursor: pointer;
+	border-radius: 3px;
+	padding: 6px;
+	color: white;
+	margin: 10px auto 10px;
+	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+	align: left;
+}
+
+.search {
+	float: right;
+	font: inherit;
+	font-size: 0.8em;
+	display: block;
+	border: none;
+	margin-top: 10px;
+	padding: 10px 0 10px;
+	border-bottom: solid 1px #03A9F4;
+	background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%,
+		#03A9F4 4%);
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%,
+		#03A9F4 4%);
+	background-position: -400px 0;
+	background-size: 400px 100%;
+	background-repeat: no-repeat;
+	-webkit-transition: background 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+	transition: background 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+	resize: none;
+	overflow: hidden;
+	transition: background 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+}
