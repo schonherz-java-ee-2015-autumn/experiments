@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService {
 		roles.add(role);
 
 		user.setRoles(roles);
-
 		System.out.println("Username in registartionUser before save:" + user.getUsername());
 		// csak egy update lesz vagyis az user_role_switch táblába fog
 		// beszúródni

@@ -7,11 +7,8 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 	<ui:define name="pageTitle">#{out.demo}</ui:define>
 	<ui:define name="content">
-		<!-- 		<h:outputText value="#{helloWorldBean.message}"></h:outputText> -->
-		<!-- 		<h2>#{helloWorldBean.message}</h2> -->
-
 		<h:form>
-			<p:panel style="width:50%;margin:auto;" id="panel" header="Új üzenet">
+			<p:panel id="panel" header="Új üzenet">
 
 				<p:messages id="msgs" />
 
@@ -30,8 +27,9 @@
 					<p:outputLabel style="width:20%;" for="targetUser"
 						value="Fogadó fél:" />
 
-					<p:autoComplete id="targetUser" value="#{messageBean.targetUser}" completeMethod="#{messageBean.searchUser}"
-						required="true" label="targetUser">
+					<p:autoComplete id="targetUser" value="#{messageBean.targetUser}"
+						completeMethod="#{messageBean.searchUser}" required="true"
+						label="targetUser">
 
 						<p:ajax update="targetUserMsg" event="keyup" />
 					</p:autoComplete>
@@ -39,7 +37,8 @@
 					<p:message for="targetUser" display="icon" id="targetUserMsg" />
 
 					<p:outputLabel for="message" value="Üzenet:" />
-					<p:inputTextarea rows="10" cols="50" id="message" value="#{messageBean.message}" />
+					<p:inputTextarea rows="10" cols="30" id="message"
+						value="#{messageBean.message}" />
 
 
 

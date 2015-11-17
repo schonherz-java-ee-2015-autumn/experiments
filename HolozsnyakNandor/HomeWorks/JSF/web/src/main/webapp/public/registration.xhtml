@@ -8,7 +8,7 @@
 	<ui:define name="pageTitle">#{out.demo}</ui:define>
 	<ui:define name="content">
 		<h:form >
-			<p:panel style="width:50%;margin:auto;" id="panel" header="New User">
+			<p:panel id="panel" header="New User">
 
 				<p:messages id="msgs" />
 
@@ -26,7 +26,7 @@
 
 					<p:outputLabel for="password" value="Password:" />
 					<p:password id="password" value="#{registrationBean.password}"
-						label="password" required="true">
+						label="password" required="true" feedback="true" >
 						<f:validateLength minimum="5" />
 						<p:ajax update="passwordMsg" event="keyup" />
 					</p:password>
@@ -38,9 +38,10 @@
 						value="#{registrationBean.passwordConfirm}"
 						label="passwordConfirm" required="true">
 						<f:validateLength minimum="5" />
-						<p:ajax update="passwordConfirmMsg" event="keyup" />
+						<p:ajax  update="passwordConfirmMsg" event="keyup"  />
+						<p:ajax  update="passConfirm" event="keyup" listener="#{registrationBean.checkPasswords}" />
 					</p:password>
-
+					<h:outputText id="passConfirm" value="#{registrationBean.passConf}" />
 					<p:message for="passwordConfirm" id="passwordConfirmMsg"
 						display="icon" />
 

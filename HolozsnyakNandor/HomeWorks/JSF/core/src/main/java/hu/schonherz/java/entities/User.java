@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -15,16 +17,15 @@ import javax.persistence.ManyToMany;
 
 public class User extends BaseEntity implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String username;
-	
+	@Column(nullable = false)
 	private String password;
-	
+
 	@ManyToMany
 	List<Role> roles;
-	
+
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -48,4 +49,5 @@ public class User extends BaseEntity implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 }

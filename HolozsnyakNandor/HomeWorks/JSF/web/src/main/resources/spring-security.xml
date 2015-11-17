@@ -1,8 +1,39 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
- 
-	
-
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+	<!-- <context:component-scan base-package="hu.neuron.java.web" /> -->
+	<security:global-method-security
+		pre-post-annotations="enabled" />
+	<security:http auto-config="true" use-expressions="true">
+		<security:csrf disabled="true" />
+		<security:headers disabled="true" />
+		<security:intercept-url pattern="/secured/*"
+			access="hasRole('USER')" />
+		<security:intercept-url pattern="/secured/manager/*"
+			access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/secured/admin/*"
+			requires-channel="https" access="hasRole('ADMIN')" />
+		<security:form-login login-page="/public/login.xhtml"
+			login-processing-url="/login" default-target-url="/index.xhtml"
+			authentication-failure-url="/public/login.xhtml?error=1"
+			username-parameter="username" password-parameter="password" />
+		<security:intercept-url pattern="/javax.faces.resource/**"
+			access="permitAll" />
+		<security:logout logout-url="/logout"
+			logout-success-url="/index.xhtml" />
+		<security:remember-me key="key"
+			remember-me-parameter="remember-me" token-validity-seconds="86400" />
+	</security:http>
+	 <bean id="customUserDetailService" class="hu.neuron.java.service.impl.CustomUserDetailService"></bean>
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider user-service-ref="customUserDetailService">
+			<!-- <security:password-encoder hash="bcrypt" /> -->
+		</security:authentication-provider>
+	</security:authentication-manager>
 </beans>

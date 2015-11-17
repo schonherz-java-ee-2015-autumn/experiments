@@ -22,10 +22,10 @@ public class MessageBean implements Serializable {
 
 	@ManagedProperty(value = "#{messageService}")
 	MessageService messageService;
-	
+
 	@ManagedProperty(value = "#{userService}")
 	UserService userService;
-	
+
 	public UserService getUserService() {
 		return userService;
 	}
@@ -66,26 +66,27 @@ public class MessageBean implements Serializable {
 		msg.setSendDate(sendDate);
 		try {
 			messageService.sendMessage(msg);
-		} catch(Exception e) {
-			
-			FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Hiba az üzenet elküldése közben!","Hiba!");
+			FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres üzenetküldés", "Sikeres!");
+			context.addMessage(null, fmsg);
+		} catch (Exception e) {
+
+			FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hiba az üzenet elküldése közben!",
+					"Hiba!");
 			context.addMessage(null, fmsg);
 			e.printStackTrace();
 		}
-		
-		FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Sikeres üzenetküldés","Sikeres!");
-		context.addMessage(null, fmsg);
-		
+
 	}
-	
+
 	public List<String> searchUser(String query) {
 		List<UserVO> list = userService.findUsersContaining(query);
 		List<String> users = new ArrayList<String>();
-		for(UserVO item:list) {
+		for (UserVO item : list) {
 			users.add(item.getUsername());
 		}
 		return users;
 	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -117,6 +118,5 @@ public class MessageBean implements Serializable {
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
 	}
-
 
 }

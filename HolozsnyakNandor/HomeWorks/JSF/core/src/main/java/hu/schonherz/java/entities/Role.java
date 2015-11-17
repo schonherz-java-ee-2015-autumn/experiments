@@ -1,10 +1,12 @@
 package hu.schonherz.java.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * Entity implementation class for Entity: User
+ * Entity implementation class for Entity: Role
  *
  */
 @Entity
@@ -13,6 +15,7 @@ public class Role extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+
 	private String name;
 
 	public String getName() {

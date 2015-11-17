@@ -16,34 +16,57 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport"
 			content="width=device-width, initial-scale=1.0, user-scalable=no" />
-		
+
 		<title><ui:insert name="pageTitle"></ui:insert></title>
 		<ui:insert name="head-extra" />
 	</h:head>
 
 	<h:body>
-		<h:form>
-			<p:growl id="menu" showDetail="false" />
-			<p:menu>
-				<p:submenu label="Menu">
-					<p:menuitem value="Bejelentkezés" url="/public/login.xhtml"
-						update="menu" icon="ui-icon-disk" />
-					<p:menuitem value="Regisztráció" url="/public/registration.xhtml"
-						update="menu" icon="ui-icon-disk" />
-					<p:menuitem value="Üzenetküldés" url="/public/message.xhtml"
-						update="menu" icon="ui-icon-disk" />
-				</p:submenu>
-			</p:menu>
-		</h:form>
-		<div id="contentDiv">
-			<div class="ui-wrap-content" style="height: 100%;">
-				<div id="content">
-					<div id="contentInside">
-						<ui:insert name="content" />
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div id="menuDiv" class="ui-grid-col-3">
+					<h:form>
+						<p:growl id="menu" showDetail="false" />
+						<p:menu>
+							<p:submenu label="Menu">
+								<p:menuitem value="Bejelentkezés" url="/public/login.xhtml"
+									update="menu" icon="ui-icon-disk" />
+								<p:menuitem value="Regisztráció"
+									url="/public/registration.xhtml" update="menu"
+									icon="ui-icon-disk" />
+							</p:submenu>
+						</p:menu>
+					</h:form>
+				</div>
+
+				<div id="contentDiv" class="ui-grid-col-5">
+					<div class="ui-wrap-content">
+						<div id="content">
+							<div id="contentInside">
+								<ui:insert name="content" />
+							</div>
+						</div>
 					</div>
+				</div>
+				<div class="ui-grid-col-1"></div>
+				<div class="ui-grid-col-3">
+					<sec:authorize ifAnyGranted="ROLE_USER">
+						<div id="userDetails" stlye="float:right; width:25%;">
+							<p:panel style="" id="panel" header="Felhasználói felület"
+								rendered="#{sec:areAnyGranted('ROLE_USER')}">
+							<h4>Üdv,</h4>
+       						<p:menu>
+							
+								<p:menuitem value="Üzenetküldés" url="/secured/message.xhtml"
+									update="menu" icon="fa fa-envelope" />
+						</p:menu>
+				</p:panel>
+						</div>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
 	</h:body>
+
 </f:view>
 </html>

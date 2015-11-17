@@ -9,7 +9,7 @@
 	<ui:define name="content">
 
 		<h:form>
-			<p:panel style="width:50%;margin:auto;" id="panel" header="New User">
+			<p:panel style="margin:auto;" id="panel" header="New User">
 
 				<p:messages id="msgs" />
 
@@ -35,7 +35,7 @@
 				</h:panelGrid>
 
 				<p:commandButton style="width:25%;margin-left:37%;" value="Save"
-					update="panel" actionListener="#{loginBean.login}"
+					update="panel" actionListener="#{loginBean.logIn}"
 					icon="ui-icon-check" />
 			</p:panel>
 		</h:form>

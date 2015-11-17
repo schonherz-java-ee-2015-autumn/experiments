@@ -13,19 +13,19 @@ import hu.neuron.java.service.vo.UserVO;
 
 @ManagedBean
 @ViewScoped
-public class RegistrationBean implements Serializable{
-	
-	
-	@ManagedProperty(value="#{userService}")
+public class RegistrationBean implements Serializable {
+
+	@ManagedProperty(value = "#{userService}")
 	UserService userService;
-	
+
 	public UserService getUserService() {
 		return userService;
 	}
-	
+
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+
 	/**
 	 * 
 	 */
@@ -33,47 +33,79 @@ public class RegistrationBean implements Serializable{
 	private String username;
 	private String password;
 	private String passwordConfirm;
-	
-	
+	private String passConf = "";
+
 	public void registration() {
 		FacesContext current = FacesContext.getCurrentInstance();
 		UserVO user = new UserVO();
-		System.out.println("Username:"+username);
-		user.setUsername(username);
-		user.setPassword(password);
-//		if(password == null || passwordConfirm == null && !passwordConfirm.equals(password)) {
-//			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Error!","A két jelszónak meg kell egyeznie!!");
-//			current.addMessage(null, msg);
-//		}
+		System.out.println("Username:" + username);
+
+		if (password == null || passwordConfirm == null) {
+			/*FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hiba",
+					"A két jelszónak meg kell egyeznie!");
+			current.addMessage(null, msg);*/
+
+		} else if (!passwordConfirm.equals(password)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "A két jelszónak meg kell egyeznie!",
+					"A két jelszónak meg kell egyeznie!");
+			current.addMessage(null, msg);
+
+		} else {
+			user.setUsername(username);
+			user.setPassword(password);
 			try {
 				userService.registrationUser(user);
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error!","Hiba a regisztráció közben.");
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hiba a regisztráció közben!",
+						"Hiba a regisztráció közben.");
 				current.addMessage(null, msg);
 				e.printStackTrace();
 			}
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Succes!","Sikeres regisztráció!");
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres regisztráció!",
+					"Sikeres regisztráció!");
 			current.addMessage(null, msg);
-		
+
+		}
 	}
+
+	public void checkPasswords() {
+		if (!password.equals(passwordConfirm)) {
+			passConf = "A két jelszónak eggyezni kell!";
+		} else {
+			passConf = "";
+		}
+	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String usename) {
 		this.username = usename;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
+
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
-	
-	
+
+	public String getPassConf() {
+		return passConf;
+	}
+
+	public void setPassConf(String passConf) {
+		this.passConf = passConf;
+	}
+
 }
