@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.demo}</ui:define>
+	<ui:define name="content">
+		<!-- 		<h:outputText value="#{helloWorldBean.message}"></h:outputText> -->
+		<!-- 		<h2>#{helloWorldBean.message}</h2> -->
+
+		<h:form>
+			<p:panel style="width:50%;margin:auto;" id="panel" header="Új üzenet">
+
+				<p:messages id="msgs" />
+
+				<h:panelGrid style="margin:auto;" columns="3" cellpadding="5">
+
+					<p:outputLabel style="width:20%;" for="sendUser" value="Küldő fél:" />
+
+					<p:inputText id="sendUser" value="#{messageBean.sendUser}"
+						required="true" label="sendUser">
+
+						<p:ajax update="fromUserMsg" event="keyup" />
+					</p:inputText>
+
+					<p:message for="sendUser" display="icon" id="fromUserMsg" />
+
+					<p:outputLabel style="width:20%;" for="targetUser"
+						value="Fogadó fél:" />
+
+					<p:autoComplete id="targetUser" value="#{messageBean.targetUser}" completeMethod="#{messageBean.searchUser}"
+						required="true" label="targetUser">
+
+						<p:ajax update="targetUserMsg" event="keyup" />
+					</p:autoComplete>
+
+					<p:message for="targetUser" display="icon" id="targetUserMsg" />
+
+					<p:outputLabel for="message" value="Üzenet:" />
+					<p:inputTextarea rows="10" cols="50" id="message" value="#{messageBean.message}" />
+
+
+
+				</h:panelGrid>
+
+				<p:commandButton style="width:25%;margin-left:37%;" value="Küldés"
+					update="panel" actionListener="#{messageBean.sendMessage}"
+					icon="ui-icon-check" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
