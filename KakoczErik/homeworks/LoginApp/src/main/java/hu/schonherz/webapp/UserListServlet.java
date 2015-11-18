@@ -1,23 +1,21 @@
 package hu.schonherz.webapp;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginOrRegister
+ * Servlet implementation class UserListServlet
  */
-public class LoginOrRegister extends HttpServlet {
+public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginOrRegister() {
+    public UserListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,18 +25,7 @@ public class LoginOrRegister extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String subType=request.getParameter("submit");
-		String name = request.getParameter("usrnm");
-		String pwd = request.getParameter("pswd");
-		User usertologin = User.findUser(name);
-		if(subType.equals("login")) 
-			if((usertologin != null) && pwd.equals(usertologin.getPassword()))
-				response.sendRedirect("Contentpage.jsp");
-			else
-				response.getWriter().write("Wrong login credentials");
-		if(subType.equals("register"))
-			response.sendRedirect("Register.jsp");
-			
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -46,8 +33,8 @@ public class LoginOrRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		
+		request.setAttribute("Users", User.getUSERS());
+		request.getRequestDispatcher("/Contentpage.jsp").forward(request, response);
 	}
 
 }
