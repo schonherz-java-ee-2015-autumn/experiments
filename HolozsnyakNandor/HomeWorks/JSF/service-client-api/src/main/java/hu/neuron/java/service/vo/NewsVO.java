@@ -2,20 +2,15 @@ package hu.neuron.java.service.vo;
 
 import java.util.Date;
 
-public class MessageVO {
+public class NewsVO {
 	
 	private Long id;
 	
 	private String content;
 
-	
 	private Date sendDate;
 	
-	
-	private UserVO sendUser;
-	
-	
-	private UserVO targetUser;
+	private String author;
 	
 	public String getContent() {
 		return content;
@@ -32,28 +27,20 @@ public class MessageVO {
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
 	}
-
-	public UserVO getSendUser() {
-		return sendUser;
-	}
-
-	public void setSendUser(UserVO sendUser) {
-		this.sendUser = sendUser;
-	}
-
-	public UserVO getTargetUser() {
-		return targetUser;
-	}
-
-	public void setTargetUser(UserVO targetUser) {
-		this.targetUser = targetUser;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 }

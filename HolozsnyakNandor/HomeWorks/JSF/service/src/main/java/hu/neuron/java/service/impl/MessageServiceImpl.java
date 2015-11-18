@@ -1,5 +1,8 @@
 package hu.neuron.java.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -7,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hu.neuron.java.service.MessageConverter;
 import hu.neuron.java.service.MessageService;
-import hu.neuron.java.service.UserConverter;
 import hu.neuron.java.service.vo.MessageVO;
 import hu.schonherz.java.dao.MessageDao;
 import hu.schonherz.java.dao.UserDao;
@@ -44,6 +46,17 @@ public class MessageServiceImpl implements MessageService {
 	public MessageVO readMessage() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<MessageVO> getMessages(Long id) {
+		List<Message> messages = messageDao.findByTargetUserIdOrderBySendDateDesc(id);
+		List<MessageVO> convertedMessages = new ArrayList<>();
+	
+		for(Message m:messages) {
+			convertedMessages.add(MessageConverter.toVo(m));
+			System.out.println("Levelek adatai:"+m.toString());
+		}
+		return convertedMessages;
 	}
 
 }

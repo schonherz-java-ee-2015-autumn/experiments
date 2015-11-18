@@ -8,13 +8,13 @@
 	<ui:define name="pageTitle">#{out.demo}</ui:define>
 	<ui:define name="content">
 		<h:form >
-			<p:panel id="panel" header="New User">
+			<p:panel id="panel" header="#{out.newUser}">
 
 				<p:messages id="msgs" />
 
 				<h:panelGrid style="margin:auto;" columns="3" cellpadding="5">
 
-					<p:outputLabel for="username" value="Username:" />
+					<p:outputLabel for="username" value="#{out.userName}" />
 
 					<p:inputText id="username" value="#{registrationBean.username}"
 						required="true" label="username">
@@ -24,8 +24,8 @@
 
 					<p:message for="username" display="icon" id="usernameMsg" />
 
-					<p:outputLabel for="password" value="Password:" />
-					<p:password id="password" value="#{registrationBean.password}"
+					<p:outputLabel for="password" value="#{out.password}" />
+					<p:password id="password" value="#{registrationBean.password}:"
 						label="password" required="true" feedback="true" >
 						<f:validateLength minimum="5" />
 						<p:ajax update="passwordMsg" event="keyup" />
@@ -33,7 +33,7 @@
 
 					<p:message for="password" id="passwordMsg" display="icon" />
 
-					<p:outputLabel for="passwordConfirm" value="PasswordConfirm:" />
+					<p:outputLabel for="passwordConfirm" value="#{out.passwordConfirm}:" />
 					<p:password id="passwordConfirm"
 						value="#{registrationBean.passwordConfirm}"
 						label="passwordConfirm" required="true">
@@ -47,7 +47,7 @@
 
 				</h:panelGrid>
 
-				<p:commandButton style="width:25%;margin-left:37%;" value="Save" update="panel"
+				<p:commandButton style="width:35%;margin-left:37%;" value="#{out.save}" update="panel"
 					actionListener="#{registrationBean.registration}"
 					icon="ui-icon-check" />
 			</p:panel>

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import hu.schonherz.java.entities.Message;
 @Repository
 public interface MessageDao extends JpaRepository<Message, Long> {
-	List<Messages> findByTargetUserIdOrderBySendDateDesc(Long id);
+	List<Message> findByTargetUserIdOrderBySendDateDesc(Long id);
 	
 	
 }

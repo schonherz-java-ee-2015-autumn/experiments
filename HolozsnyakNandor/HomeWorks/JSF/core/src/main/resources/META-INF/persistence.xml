@@ -10,6 +10,7 @@
 		<class>hu.schonherz.java.entities.Message</class>
 		<class>hu.schonherz.java.entities.Role</class>
 		<class>hu.schonherz.java.entities.User</class>
+		<class>hu.schonherz.java.entities.News</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.show_sql" value="false" />

@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private Role extracted() {
-		Role role = roleDao.findByName("USER_ROLE");
+		Role role = roleDao.findByName("ROLE_USER");
 		if (role == null) {
 			role = new Role();
-			role.setName("USER_ROLE");
+			role.setName("ROLE_USER");
 			role = roleDao.save(role);
 		}
 		return role;
@@ -83,28 +83,28 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean loginUser(UserVO userVo) {
-		System.out.println("uservo in login:" + userVo.getUsername() +" "+ userVo.getPassword());
+		System.out.println("uservo in login:" + userVo.getUsername() + " " + userVo.getPassword());
 		User user = UserConverter.toEntity(userVo);
 		List<Role> roles = user.getRoles();
-		System.out.println("user in login:" + user.getUsername() +" "+ user.getPassword());
+		System.out.println("user in login:" + user.getUsername() + " " + user.getPassword());
 		user.setRoles(roles);
 		User getUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-		if(getUser == null) {
+		if (getUser == null) {
 			System.out.println("Nincs ilyen user!");
 			return false;
 		} else {
 			System.out.println("Van ilyen user!");
 			return true;
 		}
-		//System.out.println(getUser.toString());
-		//return getUser != null ? true : false;
+		// System.out.println(getUser.toString());
+		// return getUser != null ? true : false;
 	}
 
 	@Override
 	public List<UserVO> findUsersContaining(String username) {
 		List<UserVO> users = new ArrayList<>();
 		List<User> queriedUsers = userDao.findByUsernameContaining(username);
-		for(User user:queriedUsers) {
+		for (User user : queriedUsers) {
 			users.add(UserConverter.toVo(user));
 		}
 		return users;

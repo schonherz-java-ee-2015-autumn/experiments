@@ -25,7 +25,7 @@
 			username-parameter="username" password-parameter="password" />
 		<security:intercept-url pattern="/javax.faces.resource/**"
 			access="permitAll" />
-		<security:logout logout-url="/logout"
+		<security:logout logout-url="/logout" invalidate-session="true" 
 			logout-success-url="/index.xhtml" />
 		<security:remember-me key="key"
 			remember-me-parameter="remember-me" token-validity-seconds="86400" />

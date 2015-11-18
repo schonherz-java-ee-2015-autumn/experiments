@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.demo}</ui:define>
+	<ui:define name="content">
+		<h:form id="messageForm">
+
+			<p:dataTable id="messages" var="message" lazy="true" 
+				value="#{readMessagesBean.messages}" rowKey="#{message.id}"
+				selection="#{readMessagesBean.selectedMessage}"
+				selectionMode="single">
+
+				<p:ajax event="rowSelect" listener="#{readMessagesBean.onRowSelect}"
+					update=":messageForm:messageDetail"  oncomplete="PF('messageDialog').show()" process="messages"  />
+				<p:ajax event="rowUnselect"
+					listener="#{readMessagesBean.onRowUnselect}"
+					update=":messageForm:messageDetail"/>
+
+				<p:column headerText="#{out.msgFrom}">
+					<h:outputText value="#{message.sendUser.username}" />
+				</p:column>
+
+				<p:column headerText="#{out.msg}" colspan="3">
+					<h:outputText value="#{message.content.substring(0,30).concat('...')}" />
+				</p:column>
+
+				<p:column headerText="#{out.sentDate}" >
+					<h:outputText value="#{message.sendDate}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:dialog header="Üzenet" widgetVar="messageDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="true">
+				<p:outputPanel id="messageDetail" style="width:100%;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty readMessagesBean.selectedMessage}"
+						columnClasses="label,value">
+						<h:outputText value="#{out.msgFrom}" />
+						<h:outputText value="#{readMessagesBean.selectedMessage.sendUser.username}" />
+						<h:outputText value="#{out.msg}" />
+						<h:outputText value="#{readMessagesBean.selectedMessage.content}" />
+						<h:outputText value="#{out.sentDate}" />
+						<h:outputText value="#{readMessagesBean.selectedMessage.sendDate}" />
+
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

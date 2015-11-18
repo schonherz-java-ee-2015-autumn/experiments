@@ -14,18 +14,8 @@
 
 				<h:panelGrid style="margin:auto;" columns="3" cellpadding="5">
 
-					<p:outputLabel style="width:20%;" for="sendUser" value="Küldő fél:" />
-
-					<p:inputText id="sendUser" value="#{messageBean.sendUser}"
-						required="true" label="sendUser">
-
-						<p:ajax update="fromUserMsg" event="keyup" />
-					</p:inputText>
-
-					<p:message for="sendUser" display="icon" id="fromUserMsg" />
-
-					<p:outputLabel style="width:20%;" for="targetUser"
-						value="Fogadó fél:" />
+					<p:outputLabel style="width:50%;" for="targetUser"
+						value="#{out.msgTo}" />
 
 					<p:autoComplete id="targetUser" value="#{messageBean.targetUser}"
 						completeMethod="#{messageBean.searchUser}" required="true"
@@ -36,15 +26,12 @@
 
 					<p:message for="targetUser" display="icon" id="targetUserMsg" />
 
-					<p:outputLabel for="message" value="Üzenet:" />
+					<p:outputLabel for="message" value="#{out.msg}" />
 					<p:inputTextarea rows="10" cols="30" id="message"
-						value="#{messageBean.message}" />
-
-
-
+						value="#{messageBean.message}" required="true" />
 				</h:panelGrid>
 
-				<p:commandButton style="width:25%;margin-left:37%;" value="Küldés"
+				<p:commandButton style="width:25%;margin-left:37%;" value="#{out.send}"
 					update="panel" actionListener="#{messageBean.sendMessage}"
 					icon="ui-icon-check" />
 			</p:panel>

@@ -28,12 +28,16 @@
 					<h:form>
 						<p:growl id="menu" showDetail="false" />
 						<p:menu>
-							<p:submenu label="Menu">
-								<p:menuitem value="Bejelentkezés" url="/public/login.xhtml"
+							<p:submenu label="#{out.menu}">
+								<p:menuitem value="#{out.home}" url="/index.xhtml"
 									update="menu" icon="ui-icon-disk" />
-								<p:menuitem value="Regisztráció"
+								<sec:authorize ifNotGranted="ROLE_USER">
+								<p:menuitem value="#{out.login}" url="/public/login.xhtml"
+									update="menu" icon="ui-icon-disk" />
+								<p:menuitem value="#{out.registration}"
 									url="/public/registration.xhtml" update="menu"
 									icon="ui-icon-disk" />
+								</sec:authorize>
 							</p:submenu>
 						</p:menu>
 					</h:form>
@@ -43,6 +47,7 @@
 					<div class="ui-wrap-content">
 						<div id="content">
 							<div id="contentInside">
+
 								<ui:insert name="content" />
 							</div>
 						</div>
@@ -50,17 +55,31 @@
 				</div>
 				<div class="ui-grid-col-1"></div>
 				<div class="ui-grid-col-3">
+					<p:growl id="growl" showDetail="true" />
 					<sec:authorize ifAnyGranted="ROLE_USER">
 						<div id="userDetails" stlye="float:right; width:25%;">
-							<p:panel style="" id="panel" header="Felhasználói felület"
+							<p:panel style="" id="panel" header="#{out.userPanel}"
 								rendered="#{sec:areAnyGranted('ROLE_USER')}">
-							<h4>Üdv,</h4>
-       						<p:menu>
-							
-								<p:menuitem value="Üzenetküldés" url="/secured/message.xhtml"
-									update="menu" icon="fa fa-envelope" />
-						</p:menu>
-				</p:panel>
+								<p:outputLabel style="font-size:24px;">#{out.greetings} </p:outputLabel>
+								<p:outputLabel style="font-size:24px;"
+									value="#{loggedUserDetails.username}" />
+								<p:separator />
+								<p:menu toggleable="true">
+									<p:submenu label="#{out.mailing}">
+										<p:menuitem value="#{out.newMsg}" url="/secured/message.xhtml"
+											update="menu" icon="ui-icon-mail-closed" />
+										<p:menuitem value="#{out.messages}"
+											url="/secured/messages.xhtml" update="menu"
+											icon="ui-icon-mail-open" />
+									</p:submenu>
+								</p:menu>
+								<p:separator />
+								<h:form>
+									<p:commandButton style="width:75%;margin:auto;"
+										value="#{out.logout}" actionListener="#{loginBean.logout}"
+										ajax="false" icon="ui-icon-check" update="growl" />
+								</h:form>
+							</p:panel>
 						</div>
 					</sec:authorize>
 				</div>

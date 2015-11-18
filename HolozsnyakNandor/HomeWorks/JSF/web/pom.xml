@@ -152,9 +152,9 @@
 
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>humanity</artifactId>
+			<artifactId>excite-bike</artifactId>
+			<version>1.0.6</version>
 		</dependency>
-
 	</dependencies>
 	<build>
 		<finalName>WebApp</finalName>

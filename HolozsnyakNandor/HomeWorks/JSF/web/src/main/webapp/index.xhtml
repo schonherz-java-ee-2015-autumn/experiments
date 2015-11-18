@@ -7,6 +7,29 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 	<ui:define name="pageTitle">#{out.demo}</ui:define>
 	<ui:define name="content">
-	
+		<p:panel header="#{out.news}">
+			<div id="news" stlye="float:right; width:25%;">
+				<h:form>
+					<p:dataScroller value="#{newsBean.news}" var="news" chunkSize="10">
+
+						<h:panelGrid columns="2" style="width:100%"
+							columnClasses="label,detail">
+
+							<p:outputPanel>
+								<h:panelGrid columns="2" cellpadding="5">
+									<h:outputText value="#{news.content}" style="font-weight: bold" />
+								</h:panelGrid>
+								<h:panelGrid style="font-size:12px;">
+									<h:outputLabel>Szerző:</h:outputLabel>
+									<h:outputText value="#{news.author}"/>
+								</h:panelGrid>
+								<p:separator/>
+							</p:outputPanel>
+						</h:panelGrid>
+					</p:dataScroller>
+				</h:form>
+			</div>
+
+		</p:panel>
 	</ui:define>
 </ui:composition>

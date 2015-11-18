@@ -9,13 +9,11 @@
 	<ui:define name="content">
 
 		<h:form>
-			<p:panel style="margin:auto;" id="panel" header="New User">
-
-				<p:messages id="msgs" />
+			<p:panel style="margin:auto;" id="panel" header="#{out.login}">
 
 				<h:panelGrid style="margin:auto;" columns="3" cellpadding="5">
 
-					<p:outputLabel for="username" value="Username:" />
+					<p:outputLabel for="username" value="#{out.userName}:" />
 
 					<p:inputText id="username" value="#{loginBean.username}"
 						required="true" label="username">
@@ -25,7 +23,7 @@
 
 					<p:message for="username" display="icon" id="usernameMsg" />
 
-					<p:outputLabel for="password" value="Password:" />
+					<p:outputLabel for="password" value="#{out.password}:" />
 					<p:password id="password" value="#{loginBean.password}"
 						label="password" required="true">
 						<f:validateLength minimum="5" />
@@ -34,7 +32,7 @@
 					<p:message for="password" id="passwordMsg" display="icon" />
 				</h:panelGrid>
 
-				<p:commandButton style="width:25%;margin-left:37%;" value="Save"
+				<p:commandButton style="width:35%;margin-left:37%;" value="#{out.login}"
 					update="panel" actionListener="#{loginBean.logIn}"
 					icon="ui-icon-check" />
 			</p:panel>

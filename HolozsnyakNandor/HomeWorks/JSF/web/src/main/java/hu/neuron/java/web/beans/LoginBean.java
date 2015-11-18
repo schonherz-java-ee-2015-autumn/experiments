@@ -1,15 +1,17 @@
 package hu.neuron.java.web.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -24,9 +26,9 @@ public class LoginBean implements Serializable {
 
 	@ManagedProperty(value = "#{userService}")
 	UserService userService;
-	@ManagedProperty(value="#{authenticationManager}")
-    private AuthenticationManager authenticationManager;
-	
+	@ManagedProperty(value = "#{authenticationManager}")
+	private AuthenticationManager authenticationManager;
+
 	public AuthenticationManager getAuthenticationManager() {
 		return authenticationManager;
 	}
@@ -49,26 +51,37 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
+
 	public void logIn() {
 		FacesContext current = FacesContext.getCurrentInstance();
-		 try {
-			 	System.out.println("Making a request...");
-	            Authentication request = new UsernamePasswordAuthenticationToken(getUsername(),getPassword());
-	            System.out.println("Making a result...");
-	            Authentication result = authenticationManager.authenticate(request);
-	            System.out.println("Getting context...");
-	            SecurityContextHolder.getContext().setAuthentication(result);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres bejelentkezés!",
-						"Sikeres bejelentkezés!");
+		try {
+			System.out.println("Making a request...");
+			Authentication request = new UsernamePasswordAuthenticationToken(getUsername(), getPassword());
+			System.out.println("Making a result...");
+			Authentication result = authenticationManager.authenticate(request);
+			System.out.println("Getting context...");
+			SecurityContextHolder.getContext().setAuthentication(result);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres bejelentkezés!",
+					"Sikeres bejelentkezés!");
+			
+			try {
+				current.getExternalContext().redirect("../index.xhtml");
+				current = FacesContext.getCurrentInstance();
 				current.addMessage(null, msg);
-	        } catch (AuthenticationException e) {
-	        	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Exception!!", "Hiba a bejelentkezés közben.");
-				current.addMessage(null, msg);
-	            //e.printStackTrace();
-	            
-	        }
-	        
+			} catch (IOException e) {
+
+			}
+
+		} catch (AuthenticationException e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Exception!!",
+					"Hiba a bejelentkezés közben.");
+			current.addMessage(null, msg);
+			// e.printStackTrace();
+
+		}
+
 	}
+
 	public void login() {
 		FacesContext current = FacesContext.getCurrentInstance();
 		UserVO user = new UserVO();
@@ -79,11 +92,12 @@ public class LoginBean implements Serializable {
 		try {
 			succes = userService.loginUser(user);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Exception!!", "Hiba a bejelentkezés közben.");
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Exception!!",
+					"Hiba a bejelentkezés közben.");
 			current.addMessage(null, msg);
 			e.printStackTrace();
 		}
-		
+
 		if (succes) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres bejelentkezés!",
 					"Sikeres bejelentkezés!");
@@ -94,6 +108,34 @@ public class LoginBean implements Serializable {
 			current.addMessage(null, msg);
 		}
 
+	}
+
+	public void logOutUser() {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres kijelentkezés!",
+					"Kijelentkezés");
+			
+			SecurityContextHolder.clearContext();
+			
+			FacesContext fctx = FacesContext.getCurrentInstance();  
+		    String pageToRefresh = fctx.getViewRoot().getViewId();   //getting View Id of current page
+		    
+		    ViewHandler viewHandler = fctx.getApplication().getViewHandler();      
+		    UIViewRoot viewRoot = viewHandler.createView(fctx, pageToRefresh);   //ViewRoot for current page
+		    
+		    viewRoot.setViewId(pageToRefresh);
+		    
+		    
+		    fctx.setViewRoot(viewRoot);
+		    fctx.addMessage(null, msg);
+	}
+	
+	public String logout() {
+		SecurityContextHolder.clearContext();
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres kijelentkezés!",
+				"Kijelentkezés");
+		FacesContext fctx = FacesContext.getCurrentInstance();  
+		fctx.addMessage(null,msg);
+	    return "logout";
 	}
 
 	public String getUsername() {
