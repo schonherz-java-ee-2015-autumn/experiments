@@ -16,6 +16,13 @@
 		<description></description>
 		<servlet-class>hu.schonherz.webapp.UserRegister</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>UserListServlet</display-name>
+		<servlet-name>UserListServlet</servlet-name>
+		<servlet-class>hu.schonherz.webapp.UserListServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginOrRegister</servlet-name>
 		<url-pattern>/LoginOrRegister</url-pattern>
@@ -23,6 +30,10 @@
 	<servlet-mapping>
 		<servlet-name>UserRegister</servlet-name>
 		<url-pattern>/UserRegister</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserListServlet</servlet-name>
+		<url-pattern>/UserListServlet</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

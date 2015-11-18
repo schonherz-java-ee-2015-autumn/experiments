@@ -38,6 +38,16 @@ public class User {
 		email=mail;
 	}
 	
+	
+	
+	public static ArrayList<User> getUSERS() {
+		return USERS;
+	}
+
+	public static void setUSERS(ArrayList<User> uSERS) {
+		USERS = uSERS;
+	}
+
 	public static User findUser(String name){
 		for(User u:USERS)
 			if ((u!=null) && u.username.equals(name))
