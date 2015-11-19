@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/mainLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.title}</ui:define>
+	<ui:define name="content">
+
+		<script type="text/javascript">
+			function handleDrop(event, ui) {
+				var droppedCar = ui.draggable;
+
+				droppedCar.fadeOut('fast');
+			}
+		</script>
+		<h:form name="form" id="form">
+			<p:panel style="width:50%;margin:auto;" id="panel"
+				header="#{out.newMessage}">
+
+				<p:messages id="msgs" />
+
+				<p:fieldset id="availableContactsField" legend="#{out.contacts}">
+					<p:scrollPanel mode="native" style="height:200px">
+						<p:dataGrid id="availableUsers" var="user"
+							value="#{messageBean.users}" columns="1">
+							<p:panel id="pnl" header="#{user.username}"
+								style="text-align:center">
+								<h:panelGrid columns="1" style="width:100%">
+									<h:outputText value="#{user.fullname}" />
+								</h:panelGrid>
+							</p:panel>
+
+							<p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar"
+								stack=".ui-panel" />
+						</p:dataGrid>
+					</p:scrollPanel>
+				</p:fieldset>
+
+				<p:fieldset id="selectedUsers" legend="#{out.to}"
+					style="margin-top:20px">
+					<p:outputPanel id="dropArea">
+						<h:outputText value="#{out.dropContact}"
+							rendered="#{empty messageBean.selectedUsers}"
+							style="font-size:24px;" />
+						<p:scrollPanel mode="native" style="height:200px">
+
+							<p:dataGrid id="selectedUsersTable" columns="1" var="user"
+								value="#{messageBean.selectedUsers}"
+								rendered="#{not empty messageBean.selectedUsers}">
+
+
+
+								<p:panel id="pnlTo" header="#{user.username}"
+									style="text-align:center">
+
+									<f:facet name="actions">
+										<p:commandButton style="float: right;" icon="ui-icon-close"
+											ajax="true"
+											actionListener="#{messageBean.deleteSelected(user)}"
+											update="form" />
+									</f:facet>
+
+									<h:panelGrid columns="1" style="width:100%">
+										<h:outputText value="#{user.fullname}" />
+									</h:panelGrid>
+								</p:panel>
+
+
+
+							</p:dataGrid>
+						</p:scrollPanel>
+					</p:outputPanel>
+				</p:fieldset>
+
+
+				<p:droppable for="selectedUsers" tolerance="touch"
+					activeStyleClass="ui-state-highlight" datasource="availableUsers"
+					onDrop="handleDrop">
+					<p:ajax listener="#{messageBean.onUserDrop}"
+						update="dropArea availableUsers" />
+				</p:droppable>
+
+				<h:panelGrid style="margin:auto;" columns="3" cellpadding="5">
+
+					<p:outputLabel value="#{out.message}" />
+					<p:inputTextarea rows="10" cols="50" id="message"
+						value="#{messageBean.message}" />
+
+
+
+				</h:panelGrid>
+
+				<p:commandButton style="width:25%;margin-left:37%;"
+					value="#{out.send}" update="form"
+					actionListener="#{messageBean.sendMessage}" icon="ui-icon-check" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
