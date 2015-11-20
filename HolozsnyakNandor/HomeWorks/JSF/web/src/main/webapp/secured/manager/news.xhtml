@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.demo}</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<p:panel id="panel" header="Új hír">
+
+				<p:messages id="msgs" />
+
+				<h:panelGrid style="margin:auto;" columns="2" cellpadding="5">
+					<p:outputLabel value="Beküldő:"/>
+					<p:outputLabel value="#{loggedUserDetails.username}"/>
+					<p:outputLabel for="article" value="#{out.msg}:" />
+					<p:inputTextarea rows="10" cols="30" id="article"
+						value="#{newsBean.content}" required="true" />
+				</h:panelGrid>
+
+				<p:commandButton style="width:25%;margin-left:37%;"
+					value="#{out.send}" update="panel"
+					actionListener="#{newsBean.saveArticle}" icon="ui-icon-check" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

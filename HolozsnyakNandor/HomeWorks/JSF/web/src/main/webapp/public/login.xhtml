@@ -17,7 +17,6 @@
 
 					<p:inputText id="username" value="#{loginBean.username}"
 						required="true" label="username">
-						<f:validateLength minimum="5" />
 						<p:ajax update="usernameMsg" event="keyup" />
 					</p:inputText>
 
@@ -26,14 +25,13 @@
 					<p:outputLabel for="password" value="#{out.password}:" />
 					<p:password id="password" value="#{loginBean.password}"
 						label="password" required="true">
-						<f:validateLength minimum="5" />
 						<p:ajax update="passwordMsg" event="keyup" />
 					</p:password>
 					<p:message for="password" id="passwordMsg" display="icon" />
 				</h:panelGrid>
 
 				<p:commandButton style="width:35%;margin-left:37%;" value="#{out.login}"
-					update="panel" actionListener="#{loginBean.logIn}"
+					update="panel,growl" actionListener="#{loginBean.logIn}"
 					icon="ui-icon-check" />
 			</p:panel>
 		</h:form>

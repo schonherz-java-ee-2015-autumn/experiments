@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.demo}</ui:define>
+	<ui:define name="content">
+		<h:form id="userListForm">
+
+			<p:dataTable id="users" var="user" lazy="true" 
+				value="#{readUserDetailsBean.users}"
+				selection="#{readUserDetailsBean.selectedUser}"
+				selectionMode="single"
+				rowKey="#{user.username}" resizableColumns="true" >
+				
+
+				<p:ajax event="rowSelect" listener="#{readUserDetailsBean.onRowSelect}"
+					update=":userListForm:userDetail"  oncomplete="PF('userDialog').show()" process="users"  />
+				<p:ajax event="rowUnselect"
+					listener="#{readUserDetailsBean.onRowUnselect}"
+					update=":userListForm:userDetail"/>
+
+				<p:column headerText="#{out.userName}">
+					<h:outputText value="#{user.username}" />
+				</p:column>
+				
+				<p:column headerText="#{out.email}">
+					<h:outputText value="#{user.email}" />
+				</p:column>
+				
+				<p:column headerText="#{out.fullname}" >
+					<h:outputText value="#{user.fullname}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:dialog header="Felhasználó adatai" widgetVar="userDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="true">
+				<p:outputPanel id="userDetail" style="width:100%;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty readUserDetailsBean.selectedUser}"
+						columnClasses="label,value">
+						<h:outputText value="#{out.userName}" />
+						<h:inputText  value="#{readUserDetailsBean.selectedUser.username}" />
+						<h:outputText value="#{out.email}" />
+						<h:inputText value="#{readUserDetailsBean.selectedUser.email}" />
+						<h:outputText value="#{out.fullname}" />
+						<h:inputText value="#{readUserDetailsBean.selectedUser.fullname}" />
+						<h:outputText value=""></h:outputText>							
+						<p:commandButton onclick="#{userDetailsBean.modify}" value="#{out.modify}"/>
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="/templates/masterLayout.xhtml"
-	xmlns:sec="http://www.springframework.org/security/tags">
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" >
 	<ui:define name="pageTitle">#{out.demo}</ui:define>
 	<ui:define name="content">
 		<h:form id="messageForm">
@@ -23,9 +24,9 @@
 				<p:column headerText="#{out.msgFrom}">
 					<h:outputText value="#{message.sendUser.username}" />
 				</p:column>
-
+				
 				<p:column headerText="#{out.msg}" colspan="3">
-					<h:outputText value="#{message.content.substring(0,30).concat('...')}" />
+					<h:outputText value="#{message.content.substring(0,(fn:length(message.content) lt 30?fn:length(message.content):30)).concat((fn:length(message.content) lt 30?'':'...'))}" />
 				</p:column>
 
 				<p:column headerText="#{out.sentDate}" >

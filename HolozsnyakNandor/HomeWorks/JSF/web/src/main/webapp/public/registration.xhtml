@@ -10,40 +10,47 @@
 		<h:form >
 			<p:panel id="panel" header="#{out.newUser}">
 
-				<p:messages id="msgs" />
-
 				<h:panelGrid style="margin:auto;" columns="3" cellpadding="5">
 
 					<p:outputLabel for="username" value="#{out.userName}" />
-
 					<p:inputText id="username" value="#{registrationBean.username}"
 						required="true" label="username">
 						<f:validateLength minimum="5" />
 						<p:ajax update="usernameMsg" event="keyup" />
 					</p:inputText>
-
 					<p:message for="username" display="icon" id="usernameMsg" />
 
 					<p:outputLabel for="password" value="#{out.password}" />
-					<p:password id="password" value="#{registrationBean.password}:"
+					<p:password id="password" value="#{registrationBean.password}"
 						label="password" required="true" feedback="true" >
 						<f:validateLength minimum="5" />
 						<p:ajax update="passwordMsg" event="keyup" />
 					</p:password>
-
 					<p:message for="password" id="passwordMsg" display="icon" />
 
 					<p:outputLabel for="passwordConfirm" value="#{out.passwordConfirm}:" />
 					<p:password id="passwordConfirm"
 						value="#{registrationBean.passwordConfirm}"
 						label="passwordConfirm" required="true">
-						<f:validateLength minimum="5" />
 						<p:ajax  update="passwordConfirmMsg" event="keyup"  />
-						<p:ajax  update="passConfirm" event="keyup" listener="#{registrationBean.checkPasswords}" />
+<!-- 						<p:ajax  update="passConfirm" event="keyup" listener="#{registrationBean.checkPasswords}" /> -->
 					</p:password>
-					<h:outputText id="passConfirm" value="#{registrationBean.passConf}" />
-					<p:message for="passwordConfirm" id="passwordConfirmMsg"
-						display="icon" />
+<!-- 					<h:outputText id="passConfirm" value="#{registrationBean.passConf}" /> -->
+					<p:message for="passwordConfirm" id="passwordConfirmMsg" display="icon" />
+						
+					<p:outputLabel for="email" value="Email" />
+					<p:inputText id="email" value="#{registrationBean.email}"
+						required="true" label="email">
+						<p:ajax update="emailMsg" event="keyup" />
+					</p:inputText>
+					<p:message for="email" display="icon" id="emailMsg" />
+					
+					<p:outputLabel for="fullname" value="Teljes név:" />
+					<p:inputText id="fullname" value="#{registrationBean.fullname}"
+						required="true" label="fullname">
+						<p:ajax update="fullnameMsg" event="keyup" />
+					</p:inputText>
+					<p:message for="fullname" display="icon" id="fullnameMsg" />
 
 				</h:panelGrid>
 

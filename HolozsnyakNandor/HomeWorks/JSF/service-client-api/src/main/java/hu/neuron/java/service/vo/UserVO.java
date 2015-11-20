@@ -3,6 +3,7 @@ package hu.neuron.java.service.vo;
 import java.io.Serializable;
 import java.util.List;
 
+
 public class UserVO implements Serializable {
 
 	private static final long serialVersionUID = 5932000328505763772L;
@@ -11,7 +12,24 @@ public class UserVO implements Serializable {
 	private String username;
 	private String password;
 	private List<RoleVO> roles;
+	private String fullname;
+	public String getFullname() {
+		return fullname;
+	}
 
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	private String email;
 	public Long getId() {
 		return id;
 	}

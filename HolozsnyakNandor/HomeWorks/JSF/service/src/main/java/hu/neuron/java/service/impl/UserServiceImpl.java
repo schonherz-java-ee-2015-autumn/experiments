@@ -110,4 +110,20 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 
+	@Override
+	public List<UserVO> getAllUsers() {
+		List<User> queriedUsers = userDao.getAllUsersFromTable();
+		List<UserVO> users = new ArrayList<>();
+
+		for (User user : queriedUsers) {
+			users.add(UserConverter.toVo(user));
+		}
+		return users;
+	}
+
+	@Override
+	public void updateUser(UserVO updatableUser) {
+		userDao.saveAndFlush(UserConverter.toEntity(updatableUser));
+	}
+
 }

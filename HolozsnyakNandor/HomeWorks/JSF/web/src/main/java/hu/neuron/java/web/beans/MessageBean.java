@@ -11,9 +11,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import hu.neuron.java.service.MessageService;
 import hu.neuron.java.service.UserService;
 import hu.neuron.java.service.vo.MessageVO;
@@ -55,14 +52,14 @@ public class MessageBean implements Serializable {
 	private Date sendDate;
 
 	public void sendMessage() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		MessageVO msg = new MessageVO();
 		msg.setContent(message);
 		msg.setSendDate(sendDate);
 		UserVO sender = new UserVO();
 		UserVO target = new UserVO();
-		sender.setUsername(auth.getName());
+		sender.setUsername(AuthBean.getUser());
 		target.setUsername(targetUser);
 		msg.setSendUser(sender);
 		msg.setTargetUser(target);

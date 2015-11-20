@@ -97,6 +97,7 @@ public class ReadMessagesBean implements Serializable {
 		List<String> msgs = new ArrayList<String>();
 		int i = 0;
 		String temp = "";
+		
 		System.out.println("Üzeneteid:");
 		messages = getMessages();
 		for(MessageVO m: messages) {

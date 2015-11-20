@@ -20,5 +20,9 @@ public interface UserService {
 	public boolean loginUser(UserVO user);
 	
 	public List<UserVO> findUsersContaining(String username);
+	
+	public List<UserVO> getAllUsers();
+	
+	public void updateUser(UserVO user);
 
 }

@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,21 +58,13 @@ public class LoginBean implements Serializable {
 		try {
 			System.out.println("Making a request...");
 			Authentication request = new UsernamePasswordAuthenticationToken(getUsername(), getPassword());
-			System.out.println("Making a result...");
+			//System.out.println("Making a result with REQUEST:  "+ request.toString());
+			
 			Authentication result = authenticationManager.authenticate(request);
 			System.out.println("Getting context...");
 			SecurityContextHolder.getContext().setAuthentication(result);
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres bejelentkezés!",
-					"Sikeres bejelentkezés!");
+			//current.getExternalContext().redirect("../index.xhtml");
 			
-			try {
-				current.getExternalContext().redirect("../index.xhtml");
-				current = FacesContext.getCurrentInstance();
-				current.addMessage(null, msg);
-			} catch (IOException e) {
-
-			}
-
 		} catch (AuthenticationException e) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Exception!!",
 					"Hiba a bejelentkezés közben.");
@@ -79,6 +72,21 @@ public class LoginBean implements Serializable {
 			// e.printStackTrace();
 
 		}
+		
+		try {
+			
+			Flash flash = current.getExternalContext().getFlash();
+			flash.setKeepMessages(true);
+			flash.setRedirect(true);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres bejelentkezés!",
+					"Sikeres bejelentkezés!");
+			current.addMessage(null, msg);
+			current.getExternalContext().redirect("../index.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
@@ -111,31 +119,33 @@ public class LoginBean implements Serializable {
 	}
 
 	public void logOutUser() {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres kijelentkezés!",
-					"Kijelentkezés");
-			
-			SecurityContextHolder.clearContext();
-			
-			FacesContext fctx = FacesContext.getCurrentInstance();  
-		    String pageToRefresh = fctx.getViewRoot().getViewId();   //getting View Id of current page
-		    
-		    ViewHandler viewHandler = fctx.getApplication().getViewHandler();      
-		    UIViewRoot viewRoot = viewHandler.createView(fctx, pageToRefresh);   //ViewRoot for current page
-		    
-		    viewRoot.setViewId(pageToRefresh);
-		    
-		    
-		    fctx.setViewRoot(viewRoot);
-		    fctx.addMessage(null, msg);
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres kijelentkezés!", "Kijelentkezés");
+
+		SecurityContextHolder.clearContext();
+
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		String pageToRefresh = fctx.getViewRoot().getViewId(); // getting View
+																// Id of current
+																// page
+
+		ViewHandler viewHandler = fctx.getApplication().getViewHandler();
+		UIViewRoot viewRoot = viewHandler.createView(fctx, pageToRefresh); // ViewRoot
+																			// for
+																			// current
+																			// page
+
+		viewRoot.setViewId(pageToRefresh);
+
+		fctx.setViewRoot(viewRoot);
+		fctx.addMessage(null, msg);
 	}
-	
+
 	public String logout() {
 		SecurityContextHolder.clearContext();
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres kijelentkezés!",
-				"Kijelentkezés");
-		FacesContext fctx = FacesContext.getCurrentInstance();  
-		fctx.addMessage(null,msg);
-	    return "logout";
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sikeres kijelentkezés!", "Kijelentkezés");
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		fctx.addMessage(null, msg);
+		return "logout";
 	}
 
 	public String getUsername() {

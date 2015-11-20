@@ -28,9 +28,13 @@ public class NewsServiceImpl implements NewsService {
 	
 		for(News m:news) {
 			convertedNews.add(NewsConverter.toVo(m));
-			System.out.println("Levelek adatai:"+m.toString());
+			
 		}
 		return convertedNews;
+	}
+	@Override
+	public void saveArticle(NewsVO article) {
+		newsDao.save(NewsConverter.toEntity(article));		
 	}
 
 	

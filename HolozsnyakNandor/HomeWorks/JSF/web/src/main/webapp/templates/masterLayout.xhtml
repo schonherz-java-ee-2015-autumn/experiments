@@ -29,14 +29,14 @@
 						<p:growl id="menu" showDetail="false" />
 						<p:menu>
 							<p:submenu label="#{out.menu}">
-								<p:menuitem value="#{out.home}" url="/index.xhtml"
-									update="menu" icon="ui-icon-disk" />
-								<sec:authorize ifNotGranted="ROLE_USER">
-								<p:menuitem value="#{out.login}" url="/public/login.xhtml"
-									update="menu" icon="ui-icon-disk" />
-								<p:menuitem value="#{out.registration}"
-									url="/public/registration.xhtml" update="menu"
+								<p:menuitem value="#{out.home}" url="/index.xhtml" update="menu"
 									icon="ui-icon-disk" />
+								<sec:authorize ifNotGranted="ROLE_USER">
+									<p:menuitem value="#{out.login}" url="/public/login.xhtml"
+										update="menu" icon="ui-icon-disk" />
+									<p:menuitem value="#{out.registration}"
+										url="/public/registration.xhtml" update="menu"
+										icon="ui-icon-disk" />
 								</sec:authorize>
 							</p:submenu>
 						</p:menu>
@@ -55,11 +55,10 @@
 				</div>
 				<div class="ui-grid-col-1"></div>
 				<div class="ui-grid-col-3">
-					<p:growl id="growl" showDetail="true" />
-					<sec:authorize ifAnyGranted="ROLE_USER">
+					<p:growl id="growl" autoUpdate="true" />
+					<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN,ROLE_MANAGER">
 						<div id="userDetails" stlye="float:right; width:25%;">
-							<p:panel style="" id="panel" header="#{out.userPanel}"
-								rendered="#{sec:areAnyGranted('ROLE_USER')}">
+							<p:panel style="" id="panel" header="#{out.userPanel}">
 								<p:outputLabel style="font-size:24px;">#{out.greetings} </p:outputLabel>
 								<p:outputLabel style="font-size:24px;"
 									value="#{loggedUserDetails.username}" />
@@ -71,6 +70,15 @@
 										<p:menuitem value="#{out.messages}"
 											url="/secured/messages.xhtml" update="menu"
 											icon="ui-icon-mail-open" />
+										
+									</p:submenu>
+									<p:submenu  label="Manager" rendered="#{sec:areAnyGranted('ROLE_MANAGER')}">
+										<p:menuitem value="Hírek kezelése" url="/secured/manager/news.xhtml"
+											update="menu" icon="ui-icon-mail-closed" />
+									</p:submenu>
+									<p:submenu label="Admin" rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
+										<p:menuitem value="Felhasználók szerkesztése" url="/secured/admin/userList.xhtml"
+											update="menu" icon="ui-icon-mail-closed" />
 									</p:submenu>
 								</p:menu>
 								<p:separator />

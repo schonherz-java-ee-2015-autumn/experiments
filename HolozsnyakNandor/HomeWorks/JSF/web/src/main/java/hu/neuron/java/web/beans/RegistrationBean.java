@@ -34,6 +34,11 @@ public class RegistrationBean implements Serializable {
 	private String password;
 	private String passwordConfirm;
 	private String passConf = "";
+	private String fullname;
+	private String email;
+	private boolean checkPasswords;
+
+	
 
 	public void registration() {
 		FacesContext current = FacesContext.getCurrentInstance();
@@ -53,6 +58,8 @@ public class RegistrationBean implements Serializable {
 		} else {
 			user.setUsername(username);
 			user.setPassword(password);
+			user.setEmail(email);
+			user.setFullname(fullname);
 			try {
 				userService.registrationUser(user);
 			} catch (Exception e) {
@@ -106,6 +113,30 @@ public class RegistrationBean implements Serializable {
 
 	public void setPassConf(String passConf) {
 		this.passConf = passConf;
+	}
+
+	public boolean isCheckPasswords() {
+		return checkPasswords;
+	}
+
+	public void setCheckPasswords(boolean checkPasswords) {
+		this.checkPasswords = checkPasswords;
+	}
+	
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
