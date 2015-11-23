@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+
+	<h:head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<title><ui:insert name="pageTitle"></ui:insert></title>
+		<ui:insert name="head-extra" />
+
+
+		<h:outputStylesheet library="default" name="css/bootstrap.css"></h:outputStylesheet>
+		<h:outputStylesheet library="default" name="/css/font-awesome.css"
+			rel="stylesheet" />
+		<h:outputStylesheet library="default" name="css/basic.css"
+			rel="stylesheet" />
+		<h:outputStylesheet library="default" name="css/custom.css"
+			rel="stylesheet" />
+			
+				<h:outputStylesheet library="default" name="css/bootstrap-social.css"
+			rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans'
+			rel='stylesheet' type='text/css' />
+			
+			
+
+		<h:outputScript library="primefaces" name="jquery/jquery.js"
+			target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+			target="head" />
+		<!-- BOOTSTRAP SCRIPTS -->
+		<h:outputScript library="default" name="js/bootstrap.js"></h:outputScript>
+		<!-- METISMENU SCRIPTS -->
+		<h:outputScript library="default" name="js/jquery.metisMenu.js"></h:outputScript>
+		<!-- CUSTOM SCRIPTS -->
+		<h:outputScript library="default"
+			name="js/wizard/modernizr-2.6.2.min.js"></h:outputScript>
+		<h:outputScript library="default"
+			name="js/wizard/jquery.cookie-1.3.1.js"></h:outputScript>
+		<h:outputScript library="default" name="js/wizard/jquery.steps.js"></h:outputScript>
+		<h:outputScript library="default" name="js/custom.js"></h:outputScript>
+
+	</h:head>
+
+	<h:body>
+		<div id="wrapper">
+			<nav class="navbar navbar-default navbar-cls-top " role="navigation"
+				style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">COMPANY NAME</a>
+			</div>
+
+			<div class="header-right">
+
+				<a href="message-task.html" class="btn btn-info" title="New Message"><b>30
+				</b><i class="fa fa-envelope-o fa-2x"></i></a> <a href="message-task.html"
+					class="btn btn-primary" title="New Task"><b>40 </b><i
+					class="fa fa-bars fa-2x"></i></a> <a href="login.html"
+					class="btn btn-danger" title="Logout"><i
+					class="fa fa-exclamation-circle fa-2x"></i></a>
+
+
+			</div>
+			</nav>
+			<!-- /. NAV TOP  -->
+			<nav class="navbar-default navbar-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu">
+					<li><p:outputPanel style="display:block"
+				styleClass="user-img-div"
+				rendered="#{userSessionBean.userVO != null}">
+				<p:graphicImage value="#{userImages.image}"
+					styleClass="img-thumbnail">
+					<f:param name="userId" value="#{userSessionBean.userVO.id}" />
+				</p:graphicImage>
+
+				<div class="inner-text">
+					<p:outputLabel
+						value="#{userSessionBean.userVO.username}"></p:outputLabel>
+					<br /> 
+				</div>
+			</p:outputPanel></li>
+
+
+
+					<li><a href="#{request.contextPath}/index.xhtml"><i class="fa fa-dashboard "></i>Home</a></li>
+					<li><a href="#{request.contextPath}/secured/messages.xhtml"><i class="fa fa-dashboard "></i>Messges</a>
+					</li>
+				</ul>
+			</div>
+
+			</nav>
+			<!-- /. NAV SIDE  -->
+			<div id="page-wrapper">
+				<div id="page-inner">
+					<ui:insert name="content" />
+				</div>
+				<!-- /. PAGE INNER  -->
+			</div>
+			<!-- /. PAGE WRAPPER  -->
+		</div>
+		<!-- /. WRAPPER  -->
+		<div id="footer-sec">
+			copy; 2014 YourCompany | Design By : <a
+				href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
+		</div>
+	</h:body>
+</f:view>
+</html>

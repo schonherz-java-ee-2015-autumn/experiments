@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.hello}</ui:define>
+	<ui:define name="content">
+		<div class="row">
+			<div class="col-md-6">
+
+				<div class="panel panel-success">
+					<div class="panel-heading">Message Box #1</div>
+					<div class="panel-body" style="padding: 0px;">
+						<div class="chat-widget-main" id="chat-widget">
+
+
+							<p:dataList id="messages" value="#{messagesBean.messages}" itemType="none"
+								var="message" type="none">
+								<div
+									class="#{message.sendUser.id eq userSessionBean.userVO.id ? 'chat-widget-left' : 'chat-widget-right' }">#{message.content}</div>
+
+
+								<div
+									class="#{message.sendUser.id eq userSessionBean.userVO.id ? 'chat-widget-name-left' : 'chat-widget-name-right'} ">
+
+									<div class="media">
+										<a
+											class="${message.sendUser.id eq userSessionBean.userVO.id ? 'pull-left' : 'pull-right'}"
+											href="#"><p:graphicImage
+												styleClass="avatar img-circle img-thumbnail"
+												height="40px" style="height:40px"
+												value="#{userImages.image}">
+												<f:param name="userId" value="#{message.sendUser.id}" />
+											</p:graphicImage> </a>
+										<div class="media-body">
+											<h4 class="media-heading">#{message.sendUser.id eq
+												userSessionBean.userVO.id ? userSessionBean.userVO.username
+												: message.sendUser.username }</h4>
+
+										</div>
+									</div>
+
+
+								</div>
+							</p:dataList>
+						</div>
+					</div>
+
+					<div class="panel-footer">
+
+						<h:form>
+ 							<p:poll interval="3"  update="messages"  oncomplete="$('#chat-widget').prop('scrollTop' ,$('#chat-widget').prop('scrollHeight'));"/>
+							<div class="input-group">
+								<p:inputText value="#{messagesBean.content}" id="input"
+									styleClass="form-control"></p:inputText>
+								<span class="input-group-btn"> 
+								<p:commandButton update="input,messages" styleClass="btn btn-success"
+										actionListener="#{messagesBean.send}"
+										oncomplete="$('#chat-widget').prop('scrollTop' ,$('#chat-widget').prop('scrollHeight'));" value="Send"></p:commandButton>
+								</span>
+							</div>
+						</h:form>
+
+					</div>
+				</div>
+
+
+			</div>
+			<div class="col-md-6">
+
+				<div class="panel panel-success">
+					<div class="panel-heading">Message Box #1</div>
+					<div class="panel-body" style="padding: 0px;"></div>
+					<h:form id="form">
+
+						<p:dataList value="#{messagesBean.users}" var="user" type="none">
+							<p:commandLink update="messages"
+								styleClass="btn btn-block btn-social  btn-reddit"
+								actionListener="#{messagesBean.selectUser(user)}">
+
+
+
+								<i><p:graphicImage value="#{userImages.image}"
+										styleClass="avatar img-circle img-thumbnail">
+										<f:param name="userId" value="#{user.id}" />
+									</p:graphicImage> </i>
+
+
+								<div class="col-md-6">
+									<h4 class="media-heading">#{user.username}</h4>
+								</div>
+								<div class="col-md-3"></div>
+							</p:commandLink>
+
+						</p:dataList>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
