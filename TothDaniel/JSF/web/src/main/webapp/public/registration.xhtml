@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="pageTitle">#{out.hello}</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<p:panel id="panel" header="New User">
+
+				<p:messages id="msgs" showDetail="true" />
+
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="username" value="Username:" />
+					<p:inputText id="username" value="#{registrationBean.username}"
+						required="true" label="username">
+						<f:validateLength minimum="5" />
+						<p:ajax update="usernameMsg" event="keyup" />
+					</p:inputText>
+					<p:message for="username" display="icon" id="usernameMsg" />
+
+					<p:outputLabel for="password" value="Password:" />
+					<p:password id="password" value="#{registrationBean.password}"
+						label="password" required="true" match="passwordConfirm">
+						<f:validateLength minimum="2" />
+					
+					</p:password>
+					<p:message for="password" id="msgpassword" showDetail="true" />
+
+					<p:outputLabel for="passwordConfirm" value="PasswordConfirm:" />
+					<p:password id="passwordConfirm" 
+						value="#{registrationBean.passwordConfirm}"
+						label="passwordConfirm" required="true">
+						<f:validateLength minimum="2" />
+						
+					</p:password>
+					<p:message for="passwordConfirm" id="msgpasswordConfirm"
+						showDetail="true" />
+				</h:panelGrid>
+
+				<p:commandButton value="Save" update="panel"
+					actionListener="#{registrationBean.registration}"
+					icon="ui-icon-check" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
